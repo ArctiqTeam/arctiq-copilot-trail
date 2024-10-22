@@ -2,6 +2,8 @@ package com.arctiq.chess;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Represents a chess piece with a color and type.
@@ -88,5 +90,43 @@ public class ChessPiece {
     public String toFEN() {
         String pieceChar = pieceMap.get(type);
         return color.equals("white") ? pieceChar.toUpperCase() : pieceChar;
+    }
+
+    // A function that returns the possible moves for the piece given the origin square
+    public String[] getMoves(String square) {
+        // Implement the logic to get the possible moves for the piece at the given square
+        if (type.equals("knight")) {
+            return getKnightMoves(square).toArray(new String[0]);
+        } else {
+            // Implement the logic for other pieces
+            return new String[0];
+        }
+    }
+
+    // A function that returns the possible moves for a knight given the origin square
+    public List<String> getKnightMoves(String origin) {
+        // identify squares relative to the given square that are two squares away 
+        // in one direction and one square away in the other direction.
+        List<String> moves = new ArrayList<>();
+        int[][] knightMoves = {
+            {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
+            {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
+        };
+
+        int originRow = origin.charAt(1) - '1';
+        int originCol = origin.charAt(0) - 'a';
+
+        for (int[] move : knightMoves) {
+            int newRow = originRow + move[0];
+            int newCol = originCol + move[1];
+
+            if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+                char newColChar = (char) ('a' + newCol);
+                char newRowChar = (char) ('1' + newRow);
+                moves.add("" + newColChar + newRowChar);
+            }
+        }
+
+        return moves;        
     }
 }

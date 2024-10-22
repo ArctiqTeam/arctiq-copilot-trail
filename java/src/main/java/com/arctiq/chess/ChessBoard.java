@@ -9,8 +9,8 @@ public class ChessBoard {
     private ChessSquare[][] board;
     private List<ChessPiece> capturedPieces;
     private List<String> moveList;
-    private String player1;
-    private String player2;
+    private String player;
+    private String opponent;
     private char toMove;
     private List<Character> canCastle;
     private ChessSquare enPassant;
@@ -18,12 +18,12 @@ public class ChessBoard {
     private int fullMoveNumber;
     private static final Logger LOGGER = Logger.getLogger(ChessBoard.class.getName());
 
-    public ChessBoard(String player1, String player2) {
+    public ChessBoard(String player_name, String opponent_name) {
         this.board = new ChessSquare[8][8];
         this.capturedPieces = new ArrayList<>();
         this.moveList = new ArrayList<>();
-        this.player1 = player1;
-        this.player2 = player2;
+        this.player = player_name;
+        this.opponent = opponent_name;
         this.toMove = 'w';
         this.canCastle = Arrays.asList('K', 'Q', 'k', 'q');
         this.enPassant = null;
@@ -66,7 +66,7 @@ public class ChessBoard {
     public boolean isValidPiece(String color, String piece) {
         // Attempt to create a new ChessPiece object with the given color and piece
         try {
-            ChessPiece chessPiece = new ChessPiece(color, piece);
+            new ChessPiece(color, piece);
         } catch (IllegalArgumentException e) {
             // If an IllegalArgumentException is thrown, return false
             LOGGER.severe("Invalid piece: " + piece + " for color: " + color);
@@ -80,7 +80,7 @@ public class ChessBoard {
     public boolean isValidSquare(String square) {
         // Check if the input square coordinate is valid
         try {
-            ChessSquare chessSquare = new ChessSquare(square);
+            new ChessSquare(square);
         } catch (IllegalArgumentException e) {
             LOGGER.severe("Invalid square: " + square);
             return false;
@@ -257,5 +257,73 @@ public class ChessBoard {
             boardRepresentation.append("\n");
         }
         return boardRepresentation.toString();
+    }
+
+    public String getMatchUp() {
+        return this.player + " - " + this.opponent;
+    }
+
+    public String getMoveList(boolean oneLine) {
+        StringBuilder movesWithNumbers = new StringBuilder();
+        int moveNumber = 1;
+        for (int i = 0; i < moveList.size(); i++) {
+            if (i % 2 == 0) {
+            movesWithNumbers.append(moveNumber).append(". ");
+            moveNumber++;
+            }
+            movesWithNumbers.append(moveList.get(i));
+            if (i % 2 == 1) {
+            if (!oneLine) {
+                movesWithNumbers.append("\n");
+            } else {
+                movesWithNumbers.append(" ");
+            }
+            } else {
+            movesWithNumbers.append(" ");
+            }
+        }
+        return movesWithNumbers.toString().trim();
+    }
+
+    public boolean canMove(String from, String to) {
+        // Check if a piece can move from one square to another
+        new ChessSquare(from);
+        new ChessSquare(to);
+        ChessPiece piece = this.getPieceAt(from);
+        if (piece == null) {
+            return false;
+        }
+        boolean allowed = false;
+        List<String> moves = Arrays.asList(piece.getMoves(from));
+        if (moves.contains(moves.toString())) {
+            allowed = true;
+        }
+        ChessPiece targetPiece = this.getPieceAt(to);
+        if (targetPiece != null && targetPiece.getColor().equals(piece.getColor())) {
+            allowed = false;
+        }
+        // still need: check if piece is pinned to king, making the move illegal
+        return allowed;
+    }
+
+    public void movePiece(String from, String to) {
+        // Move a piece from one square to another
+        ChessSquare fromSquare = new ChessSquare(from);
+        ChessSquare toSquare = new ChessSquare(to);
+        ChessPiece piece = this.getPieceAt(from);
+        if (piece == null) {
+            throw new IllegalArgumentException("No piece at square: " + from);
+        }
+        if (!this.canMove(fromSquare.toString(), toSquare.toString())) {
+            throw new IllegalArgumentException("Invalid move from: " + from + " to: " + to);
+        }
+        if (this.getPieceAt(to) != null && this.getPieceAt(to).getColor() != piece.getColor()) {
+            this.takePiece(to, piece);
+        } else {
+            this.removePiece(from);
+            this.addPiece(piece.getColor(), piece.getType(), to);
+        }
+        this.moveList.add(piece.toFEN() + from + to);
+        this.toMove = this.toMove == 'w' ? 'b' : 'w';
     }
 }
