@@ -1,0 +1,65 @@
+<!-- src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chess Board</title>
+    <link rel="stylesheet" href="resources/static/css/chessboard-1.0.0.css">
+    <script src="resources/static/js/jquery-3.7.1.min.js"></script>
+    <script src="resources/static/js/chessboard-1.0.0.js"></script>
+    <script>
+        const EMPTY_FEN = '8/8/8/8/8/8/8/8 w - - 0 1'; // Empty chess board FEN string
+        const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'; // Chess starting position FEN string
+    </script>
+    <script>
+        function hideErrorText() {
+            var error = document.getElementById('errorText');
+            if (error !== null) {
+                document.getElementById('errorText').style.display = 'none';
+            }
+        }
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            var fen = /*[[${fen}]]*/ 'start';
+        /*]]>*/
+    </script>
+</head>
+<body>
+    <div id="board" style="width: 400px; margin: 0 auto;"></div>
+    <form action="/loadFen" method="post">
+        <div style="text-align: center;">
+            <input type="text" name="fen" placeholder="Enter FEN string" required style="width: 64ch;" onclick="hideErrorText()" th:value="${fen}">
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <button type="submit">Load FEN</button>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <button type="button" onclick="board.clear(); document.querySelector('input[name=fen]').value = EMPTY_FEN;">Clear Board</button>
+            <button type="button" onclick="board.position('start'); document.querySelector('input[name=fen]').value = START_FEN;">Reset Board</button>
+            <button type="button" onclick="board.flip();">Flip Board</button>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <p id="errorText" th:if="${error}" th:text="${error}" style="color: red; display: none;"></p>
+            <script>
+                var error = document.getElementById('errorText');
+                if (error !== null) {
+                    document.getElementById('errorText').style.display = 'block';
+                }
+            </script>
+        </div>
+    </form>
+    <script>
+        if (typeof error !== 'undefined' && error !== null) {
+            fen = EMPTY_FEN;
+        }
+        if (typeof fen === 'undefined' || fen === null || fen === '') {
+            fen = START_FEN;
+        }
+        var config = {
+            pieceTheme: 'resources/static/img/chesspieces/wikipedia/{piece}.png',
+            position: fen
+        };
+        var board = Chessboard('board', config);
+    </script>
+</body>
+</html>
