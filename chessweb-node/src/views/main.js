@@ -89,9 +89,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sourcePosition !== targetPosition) {
             const sourceCell = document.querySelector(`[data-position="${sourcePosition}"]`);
             const targetCell = document.querySelector(`[data-position="${targetPosition}"]`);
+            const targetPiece = targetCell.querySelector('img');
 
             const piece = sourceCell.querySelector('img');
             if (piece) {
+                const pieceType = piece.alt.toLowerCase();
+                const pieceColor = piece.alt === piece.alt.toLowerCase() ? 'black' : 'white';
+                const targetPieceColor = targetPiece ? (targetPiece.alt === targetPiece.alt.toLowerCase() ? 'black' : 'white') : null;
+
+                // Check if the target cell has a piece of the same color
+                if (targetPiece && pieceColor === targetPieceColor) {
+                    // Pieces are of the same color, do not allow the move
+                    return;
+                }
+
+                // Calculate the row and column differences
+                const [sourceRow, sourceCol] = sourcePosition.split('-').map(Number);
+                const [targetRow, targetCol] = targetPosition.split('-').map(Number);
+                const rowDiff = targetRow - sourceRow;
+                const colDiff = targetCol - sourceCol;
+
+                // Check pawn movement rules
+                if (pieceType === 'p') {
+                    const direction = pieceColor === 'white' ? -1 : 1;
+                    const startRow = pieceColor === 'white' ? 6 : 1;
+
+                    // Normal move
+                    if (colDiff === 0 && rowDiff === direction && !targetPiece) {
+                    // Allow move
+                    }
+                    // First move
+                    else if (colDiff === 0 && rowDiff === 2 * direction && sourceRow === startRow && !targetPiece) {
+                    // Allow move
+                    }
+                    // Capture move
+                    else if (Math.abs(colDiff) === 1 && rowDiff === direction && targetPiece && pieceColor !== targetPieceColor) {
+                    // Allow move
+                    }
+                    else {
+                    // Invalid move for pawn
+                    return;
+                    }
+                }
+
                 sourceCell.removeChild(piece);
                 targetCell.innerHTML = '';
                 targetCell.appendChild(piece);
