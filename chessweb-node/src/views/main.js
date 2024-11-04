@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chessBoard = document.getElementById('chess-board');
-  
+    const turnIndicator = document.getElementById('turn-indicator');
+    let currentPlayer = 'white'; // White plays first
+
     // Function to fetch the chess position from the server
     async function fetchChessPosition(fen) {
       try {
@@ -65,7 +67,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             chessBoard.appendChild(rowDiv);
         });
+
+        // Update the turn indicator
+        updateTurnIndicator();
     }
+
+    // Function to update the turn indicator
+    function updateTurnIndicator() {
+        if (currentPlayer === 'white') {
+            turnIndicator.style.backgroundColor = 'white';
+            turnIndicator.style.alignSelf = 'flex-end'; // Align with the bottom
+        } else {
+            turnIndicator.style.backgroundColor = 'black';
+            turnIndicator.style.alignSelf = 'flex-start'; // Align with the top
+        }
+    }    
 
     // Drag and Drop Handlers
     function handleDragStart(event) {
@@ -96,6 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pieceType = piece.alt.toLowerCase();
                 const pieceColor = piece.alt === piece.alt.toLowerCase() ? 'black' : 'white';
                 const targetPieceColor = targetPiece ? (targetPiece.alt === targetPiece.alt.toLowerCase() ? 'black' : 'white') : null;
+
+                // Check if it's the current player's turn
+                if (pieceColor !== currentPlayer) {
+                    // Not the current player's turn, do not allow the move
+                    return;
+                }
 
                 // Check if the target cell has a piece of the same color
                 if (targetPiece && pieceColor === targetPieceColor) {
@@ -152,6 +174,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
                 // Ensure the piece can be dragged again
                 piece.draggable = true;
+
+                // Toggle the current player
+                currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+
+                // Update the turn indicator
+                updateTurnIndicator();
             }
         }
     }

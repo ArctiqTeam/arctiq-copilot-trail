@@ -6,6 +6,22 @@
   <title>Chess Position</title>
   <style>
     /* Add your CSS styling here */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 1vh;
+    }
+    .chess-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .chess-board {
+      display: flex;
+      flex-direction: column;
+    }
     .chess-row {
       display: flex;
     }
@@ -27,10 +43,20 @@
     width: 100%;
     height: 100%;
     }
+    .turn-indicator {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px; /* Space between the board and the indicator */
+      border: 1px solid black;
+      align-self: flex-start; /* default to align to with the top */
+    }
   </style>
 </head>
 <body>
-  <div id="chess-board"></div>
+  <div class="chess-container">
+    <div id="chess-board" class="chess-board"></div>
+    <div id="turn-indicator" class="turn-indicator"></div>
+  </div>
   <script src="main.js"></script>
 </body>
 </html>
