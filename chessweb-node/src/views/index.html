@@ -13,6 +13,11 @@
       height: 100vh;
       margin: 1vh;
     }
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .chess-container {
       display: flex;
       flex-direction: row;
@@ -50,12 +55,24 @@
       border: 1px solid black;
       align-self: flex-start; /* default to align to with the top */
     }
+    .fen-container {
+      margin-top: 10px;
+    }
+    .fen-container input {
+      width: 400px; /* Set a fixed width for the FEN input field */
+    }
   </style>
 </head>
 <body>
-  <div class="chess-container">
-    <div id="chess-board" class="chess-board"></div>
-    <div id="turn-indicator" class="turn-indicator"></div>
+  <div class="main-area">
+    <div class="chess-container">
+      <div id="chess-board" class="chess-board"></div>
+      <div id="turn-indicator" class="turn-indicator"></div>
+    </div>
+    <div class="fen-container">
+      <label for="fen">FEN:</label>
+      <input type="text" id="fen" readonly>
+    </div>
   </div>
   <script src="main.js"></script>
 </body>

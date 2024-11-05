@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chessBoard = document.getElementById('chess-board');
     const turnIndicator = document.getElementById('turn-indicator');
+    const fenInput = document.getElementById('fen');
     let currentPlayer = 'white'; // White plays first
 
     // Function to fetch the chess position from the server
@@ -70,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update the turn indicator
         updateTurnIndicator();
+        // Update the FEN input field
+        fenInput.value = fen;
     }
 
     // Function to update the turn indicator
@@ -82,6 +85,36 @@ document.addEventListener('DOMContentLoaded', () => {
             turnIndicator.style.alignSelf = 'flex-start'; // Align with the top
         }
     }    
+
+    // Function to generate FEN string from the current board state
+    function generateFEN() {
+        let fen = '';
+        for (let row = 0; row < 8; row++) {
+            let emptyCount = 0;
+            for (let col = 0; col < 8; col++) {
+                const cell = document.querySelector(`[data-position="${row}-${col}"]`);
+                const piece = cell.querySelector('img');
+                if (piece) {
+                    if (emptyCount > 0) {
+                        fen += emptyCount;
+                        emptyCount = 0;
+                    }
+                    fen += piece.alt;
+                } else {
+                    emptyCount++;
+                }
+            }
+            if (emptyCount > 0) {
+                fen += emptyCount;
+            }
+            if (row < 7) {
+                fen += '/';
+            }
+        }
+        // Add additional FEN fields (turn, castling, en passant, halfmove, fullmove)
+        fen += ` ${currentPlayer === 'white' ? 'w' : 'b'} - - 0 1`;
+        return fen;
+    }
 
     // Drag and Drop Handlers
     function handleDragStart(event) {
@@ -180,6 +213,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Update the turn indicator
                 updateTurnIndicator();
+                // Update the FEN input field
+                fenInput.value = generateFEN();
             }
         }
     }

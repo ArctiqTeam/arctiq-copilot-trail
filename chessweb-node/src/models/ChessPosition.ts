@@ -5,5 +5,8 @@ export class ChessPosition {
       this.fen = fen;
     }
   
+    getFEN(): string {
+      return this.fen;
+    }
     // Add methods to parse and manipulate FEN notation
   }
