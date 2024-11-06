@@ -9,6 +9,8 @@ app.use(bodyParser.json());
 app.use(express.static('src/views'));
 
 app.get('/position', ChessController.getPosition);
+app.post('/addGame', ChessController.addGame);
+app.get('/getGame/:id', ChessController.getGameById);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

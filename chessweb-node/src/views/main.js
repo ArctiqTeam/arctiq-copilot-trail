@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const turnIndicator = document.getElementById('turn-indicator');
     const fenInput = document.getElementById('fen');
     const copyFenButton = document.getElementById('copy-fen');
+    const saveGameButton = document.getElementById('save-game');
+    const loadGameButton = document.getElementById('load-game');
+    const gameIdInput = document.getElementById('game-id');
     let currentPlayer = 'white'; // White plays first
 
     // Function to fetch the chess position from the server
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error fetching chess position:', error);
       }
     }
-  
+
     // Function to render the chess board
     function renderChessBoard(fen) {
         // Clear the existing board
@@ -230,7 +233,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Save game to the server
+    saveGameButton.addEventListener('click', async () => {
+        const fen = generateFEN();
+        try {
+            const response = await fetch('/addGame', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fen })
+            });
+            const data = await response.json();
+            alert(`Game saved with ID: ${data.gameId}`);
+        } catch (error) {
+            console.error('Error saving game:', error);
+        }
+    });
+
+    // Load game from the server
+    loadGameButton.addEventListener('click', async () => {
+        const gameId = gameIdInput.value;
+        try {
+            const response = await fetch(`/getGame/${gameId}`);
+            const data = await response.json();
+            renderChessBoard(data.fen);
+        } catch (error) {
+            console.error('Error loading game:', error);
+        }
+    });
+
     // Example FEN string for initial load
     const initialFEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
     fetchChessPosition(initialFEN);
-  });
+});
