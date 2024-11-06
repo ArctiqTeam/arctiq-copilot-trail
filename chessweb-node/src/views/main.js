@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chessBoard = document.getElementById('chess-board');
     const turnIndicator = document.getElementById('turn-indicator');
     const fenInput = document.getElementById('fen');
+    const copyFenButton = document.getElementById('copy-fen');
     let currentPlayer = 'white'; // White plays first
 
     // Function to fetch the chess position from the server
@@ -218,6 +219,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // Copy FEN to clipboard using Clipboard API
+    copyFenButton.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(fenInput.value);
+            alert('FEN copied to clipboard');
+        } catch (err) {
+            console.error('Failed to copy FEN: ', err);
+        }
+    });
 
     // Example FEN string for initial load
     const initialFEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
