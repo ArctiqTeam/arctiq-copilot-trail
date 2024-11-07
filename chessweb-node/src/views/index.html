@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Position</title>
+  <style>
+    /* Add your CSS styling here */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 1vh;
+    }
+    .main-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .chess-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .chess-board {
+      display: flex;
+      flex-direction: column;
+    }
+    .chess-row {
+      display: flex;
+    }
+    .chess-cell {
+      width: 50px;
+      height: 50px;
+      border: 1px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .light-square {
+      background-color: #e9ebcc;
+    }
+    .dark-square {
+      background-color: #69bf80;
+    }
+    .chess-piece {
+      width: 100%;
+      height: 100%;
+    }
+    .turn-indicator {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px; /* Space between the board and the indicator */
+      border: 1px solid black;
+      align-self: flex-start; /* default to align to with the top */
+    }
+    .fen-container {
+      margin-top: 10px;
+    }
+    .fen-container input {
+      width: 400px; /* Set a fixed width for the FEN input field */
+    }
+    .fen-container button {
+      margin-left: 10px;
+    }
+    .game-controls {
+      margin-top: 10px;
+    }
+    .game-controls input {
+      width: 200px; /* Set a fixed width for the game ID input field */
+    }
+    .game-controls button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-area">
+    <div class="chess-container">
+      <div id="chess-board" class="chess-board"></div>
+      <div id="turn-indicator" class="turn-indicator"></div>
+    </div>
+    <div class="fen-container">
+      <label for="fen">FEN:</label>
+      <input type="text" id="fen" readonly>
+      <button id="copy-fen">Copy FEN</button>
+    </div>
+    <div class="game-controls">
+      <button id="save-game">Save Game</button>
+      <input type="text" id="game-id" placeholder="Enter Game ID">
+      <button id="load-game">Load Game</button>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
