@@ -264,6 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Example FEN string for initial load
-    const initialFEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
+    const initialFEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
     fetchChessPosition(initialFEN);
 });
