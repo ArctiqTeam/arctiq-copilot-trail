@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace chessweb_csharp.Pages
 {
-    public class ChessControllerModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly HttpClient _httpClient;
 
-        public ChessControllerModel(HttpClient httpClient)
+        public IndexModel(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
         [BindProperty]
-        public string Fen { get; set; } = string.Empty;
+        public string Fen { get; set; } = ChessConstants.StartFen;
 
         [BindProperty]
         public string GameId { get; set; } = string.Empty;
