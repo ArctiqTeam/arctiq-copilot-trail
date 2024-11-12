@@ -1,6 +1,0 @@
-@chessweb_csharp_HostAddress = http://localhost:5152
-
-GET {{chessweb_csharp_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
