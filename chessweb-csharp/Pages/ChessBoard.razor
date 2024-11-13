@@ -15,7 +15,7 @@
                      @ondrop="async () => await DropPiece(currentRow, currentCol)">
                     @if (board[currentRow, currentCol] != null)
                     {
-                        <img src="@board[currentRow, currentCol].Image"
+                        <img src="@board[currentRow, currentCol]?.Image"
                              class="chess-piece"
                              draggable="true"
                              @ondragstart="async () => await DragPiece(currentRow, currentCol)" />
