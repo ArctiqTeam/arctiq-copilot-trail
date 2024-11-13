@@ -1,0 +1,82 @@
+@page "/"
+@inject IJSRuntime JS
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="chessboard">
+    @for (int row = 0; row < 8; row++)
+    {
+        <div class="row">
+            @for (int col = 0; col < 8; col++)
+            {
+                int currentRow = row;
+                int currentCol = col;
+                <div class="square @(IsDarkSquare(currentRow, currentCol) ? "dark" : "light")"
+                     ondragover="event.preventDefault()"
+                     @ondrop="async () => await DropPiece(currentRow, currentCol)">
+                    @if (board[currentRow, currentCol] != null)
+                    {
+                        <img src="@board[currentRow, currentCol]?.Image"
+                             class="chess-piece"
+                             draggable="true"
+                             @ondragstart="async () => await DragPiece(currentRow, currentCol)" />
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private ChessPiece?[,] board = new ChessPiece?[8, 8];
+
+    protected override void OnInitialized()
+    {
+        InitializeBoard();
+    }
+
+    private void InitializeBoard()
+    {
+        // Initialize the board with pieces
+        for (int col = 0; col < 8; col++)
+        {
+            board[1, col] = new ChessPiece { Image = "images/bP.png", Type = ChessPieceType.Pawn, Color = ChessPieceColor.Black };
+            board[6, col] = new ChessPiece { Image = "images/wP.png", Type = ChessPieceType.Pawn, Color = ChessPieceColor.White };
+        }
+    }
+
+    private bool IsDarkSquare(int row, int col)
+    {
+        return (row + col) % 2 != 0;
+    }
+
+    private async Task DragPiece(int row, int col)
+    {
+        Console.WriteLine($"Drag started: {row},{col}");
+        await JS.InvokeVoidAsync("chessInterop.setData", $"{row},{col}");
+    }
+    private async Task DropPiece(int row, int col)
+    {
+        Console.WriteLine($"Drop at: {row},{col}");
+        var data = await JS.InvokeAsync<string>("chessInterop.getData");
+        if (string.IsNullOrEmpty(data)) return;
+    
+        var parts = data.Split(',');
+        var fromRow = int.Parse(parts[0]);
+        var fromCol = int.Parse(parts[1]);
+    
+        // Add basic validation
+        if (fromRow == row && fromCol == col) return;
+        if (board[fromRow, fromCol] == null) return;
+    
+        // Move the piece
+        board[row, col] = board[fromRow, fromCol];
+        board[fromRow, fromCol] = null;
+    
+        StateHasChanged();
+    }
+    
+    private void AllowDrop(DragEventArgs e)
+    {
+        // In Blazor, preventing default behavior is handled by returning true
+    }
+}
