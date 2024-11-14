@@ -34,13 +34,49 @@
         InitializeBoard();
     }
 
-    private void InitializeBoard()
+    private readonly Dictionary<char, (string Image, ChessPieceType Type)> pieceMap = new()
     {
-        // Initialize the board with pieces
-        for (int col = 0; col < 8; col++)
+        {'p', ("images/bP.png", ChessPieceType.Pawn)},
+        {'r', ("images/bR.png", ChessPieceType.Rook)},
+        {'n', ("images/bN.png", ChessPieceType.Knight)},
+        {'b', ("images/bB.png", ChessPieceType.Bishop)},
+        {'q', ("images/bQ.png", ChessPieceType.Queen)},
+        {'k', ("images/bK.png", ChessPieceType.King)},
+        {'P', ("images/wP.png", ChessPieceType.Pawn)},
+        {'R', ("images/wR.png", ChessPieceType.Rook)},
+        {'N', ("images/wN.png", ChessPieceType.Knight)},
+        {'B', ("images/wB.png", ChessPieceType.Bishop)},
+        {'Q', ("images/wQ.png", ChessPieceType.Queen)},
+        {'K', ("images/wK.png", ChessPieceType.King)}
+    };
+    
+    private void InitializeBoard(string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+    {
+        // Clear the board
+        board = new ChessPiece[8, 8];
+        
+        string[] ranks = fen.Split('/');
+        for (int row = 0; row < 8; row++)
         {
-            board[1, col] = new ChessPiece { Image = "images/bP.png", Type = ChessPieceType.Pawn, Color = ChessPieceColor.Black };
-            board[6, col] = new ChessPiece { Image = "images/wP.png", Type = ChessPieceType.Pawn, Color = ChessPieceColor.White };
+            int col = 0;
+            foreach (char c in ranks[row])
+            {
+                if (char.IsDigit(c))
+                {
+                    col += c - '0';
+                }
+                else
+                {
+                    var (image, type) = pieceMap[c];
+                    board[row, col] = new ChessPiece 
+                    { 
+                        Image = image,
+                        Type = type,
+                        Color = char.IsUpper(c) ? ChessPieceColor.White : ChessPieceColor.Black
+                    };
+                    col++;
+                }
+            }
         }
     }
 
