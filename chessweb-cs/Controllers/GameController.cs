@@ -9,11 +9,11 @@ public class GameController : Controller
         _gameState = new GameState(); // Uses default FEN
     }
     
-    // Alternative constructor for custom positions
-    // public GameController(string fen)
-    // {
-    //     _gameState = new GameState(fen);
-    // }
+    //Alternative constructor for custom positions
+    public GameController(string fen)
+    {
+        _gameState = new GameState(fen);
+    }
 
     public IActionResult Index()
     {

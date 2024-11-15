@@ -6,6 +6,8 @@ public class Board
     
     public void SetPositionFromFen(string fen = INITIAL_FEN)
     {
+        if (string.IsNullOrWhiteSpace(fen))
+            fen = INITIAL_FEN;
         Squares = new Piece[8,8]; // Reset board
         string[] fenParts = fen.Split(' ');
         string position = fenParts[0];
