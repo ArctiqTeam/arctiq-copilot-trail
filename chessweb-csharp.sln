@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chessweb-csharp", "chessweb-csharp\chessweb-csharp.csproj", "{EF292D0F-4638-435F-B997-0246EDDFD261}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chessweb-csharp.Tests", "chessweb-csharp.Tests\chessweb-csharp.Tests.csproj", "{5E2FCA5E-BFB6-4F16-9754-061B83071926}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF292D0F-4638-435F-B997-0246EDDFD261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF292D0F-4638-435F-B997-0246EDDFD261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF292D0F-4638-435F-B997-0246EDDFD261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF292D0F-4638-435F-B997-0246EDDFD261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E2FCA5E-BFB6-4F16-9754-061B83071926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E2FCA5E-BFB6-4F16-9754-061B83071926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E2FCA5E-BFB6-4F16-9754-061B83071926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E2FCA5E-BFB6-4F16-9754-061B83071926}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
