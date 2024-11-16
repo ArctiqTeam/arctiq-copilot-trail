@@ -6,8 +6,10 @@ public class Board
     
     public void SetPositionFromFen(string fen = INITIAL_FEN)
     {
-        if (string.IsNullOrWhiteSpace(fen))
+        if (string.IsNullOrWhiteSpace(fen) || fen == "start")
             fen = INITIAL_FEN;
+        else if (fen == "empty")
+            fen = "8/8/8/8/8/8/8/8";
         Squares = new Piece[8,8]; // Reset board
         string[] fenParts = fen.Split(' ');
         string position = fenParts[0];
@@ -53,7 +55,7 @@ public class Board
             
         Squares[to.Row, to.Column] = piece;
         Squares[from.Row, from.Column] = null;
-        piece.Position = to;
+        piece.UpdatePosition(to);
         return true;
     }
 }

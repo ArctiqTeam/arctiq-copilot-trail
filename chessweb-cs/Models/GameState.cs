@@ -5,7 +5,7 @@ public class GameState
     public PieceColor CurrentTurn { get; set; } = PieceColor.White;
     public bool IsGameOver { get; set; }
     
-    public GameState(string fen = null)
+    public GameState(string fen)
     {
         Board = new Board();
         Board.SetPositionFromFen(fen);
@@ -17,5 +17,22 @@ public class GameState
     {
         CurrentTurn = CurrentTurn == PieceColor.White ? 
             PieceColor.Black : PieceColor.White;
+    }
+
+        // In GameState.cs
+    public bool MovePiece(Position from, Position to)
+    {
+        var piece = Board.Squares[from.Row, from.Column];
+        if (piece == null) return false;
+        
+        Board.Squares[to.Row, to.Column] = piece;
+        Board.Squares[from.Row, from.Column] = null;
+        return true;
+    }
+
+        public void Reset()
+    {
+        // Reinitialize the board with starting position
+        Board.SetPositionFromFen("start");
     }
 }

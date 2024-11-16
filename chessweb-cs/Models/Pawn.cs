@@ -3,10 +3,8 @@ public class Pawn : Piece
 {
     public override char Symbol => Color == PieceColor.White ? 'P' : 'p';
     
-    public Pawn(PieceColor color, Position position)
+    public Pawn(PieceColor color, Position position): base(color, PieceType.Pawn, position)
     {
-        Color = color;
-        Position = position;
     }
     
     public override bool IsValidMove(Position newPosition, Board board)

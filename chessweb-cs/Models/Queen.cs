@@ -3,12 +3,10 @@ public class Queen : Piece
 {
     public override char Symbol => Color == PieceColor.White ? 'Q' : 'q';
     
-    public Queen(PieceColor color, Position position)
+    public Queen(PieceColor color, Position position): base(color, PieceType.Queen, position)
     {
-        Color = color;
-        Position = position;
     }
-    
+
     public override bool IsValidMove(Position newPosition, Board board)
     {
         bool isDiagonal = Math.Abs(newPosition.Row - Position.Row) == 

@@ -1,0 +1,36 @@
+.chess-board {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 403px;  /* 8 cells × 50px per cell */
+    height: 403px; /* 8 cells × 50px per cell */
+    margin: 0 auto;
+    padding: 0;
+    /* Remove positioning if not needed */
+    position: static;
+}
+
+.row {
+    display: flex;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cell.white { background-color: #f3f2ed; }
+.cell.black { background-color: #64c182; }
+.cell.selected { background-color: #a2bdf1; }
+.piece {
+    width: 40px;   /* Fixed width */
+    height: 40px;  /* Fixed height */
+    object-fit: contain;
+}

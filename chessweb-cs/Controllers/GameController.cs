@@ -3,16 +3,10 @@ using ChessWeb.Models;
 public class GameController : Controller
 {
     private readonly GameState _gameState;
-    
-    public GameController()
+
+    public GameController(GameState gameState)
     {
-        _gameState = new GameState(); // Uses default FEN
-    }
-    
-    //Alternative constructor for custom positions
-    public GameController(string fen)
-    {
-        _gameState = new GameState(fen);
+        _gameState = gameState;
     }
 
     public IActionResult Index()
@@ -26,11 +20,20 @@ public class GameController : Controller
         var from = new Position(fromRow, fromCol);
         var to = new Position(toRow, toCol);
         
-        if (_gameState.Board.MovePiece(from, to))
+        bool moveSuccessful = _gameState.MovePiece(from, to);
+        
+        if (!moveSuccessful)
         {
-            _gameState.SwitchTurn();
+            return Json(new { success = false, message = "Invalid move" });
         }
         
-        return RedirectToAction(nameof(Index));
+        return Json(new { success = true });
+    }
+    
+    [HttpPost]
+    public IActionResult Reset()
+    {
+        _gameState.Reset();  // Assuming you have a Reset method in GameState
+        return Json(new { success = true });
     }
 }

@@ -3,12 +3,10 @@ public class King : Piece
 {
     public override char Symbol => Color == PieceColor.White ? 'K' : 'k';
     
-    public King(PieceColor color, Position position)
+    public King(PieceColor color, Position position): base(color, PieceType.King, position)
     {
-        Color = color;
-        Position = position;
     }
-    
+
     public override bool IsValidMove(Position newPosition, Board board)
     {
         int rowDiff = Math.Abs(newPosition.Row - Position.Row);

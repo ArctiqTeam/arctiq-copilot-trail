@@ -3,10 +3,8 @@ public class Rook : Piece
 {
     public override char Symbol => Color == PieceColor.White ? 'R' : 'r';
     
-    public Rook(PieceColor color, Position position)
+    public Rook(PieceColor color, Position position): base(color, PieceType.Rook, position)
     {
-        Color = color;
-        Position = position;
     }
     
     public override bool IsValidMove(Position newPosition, Board board)
