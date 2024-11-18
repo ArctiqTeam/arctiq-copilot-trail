@@ -7,15 +7,15 @@ public class Knight : Piece
     {
     }
 
-    public override bool IsValidMove(Position newPosition, Board board)
+    public override bool IsValidMove(Position from, Position to, Board board)
     {
-        int rowDiff = Math.Abs(newPosition.Row - Position.Row);
-        int colDiff = Math.Abs(newPosition.Column - Position.Column);
+        int rowDiff = Math.Abs(to.Row - from.Row);
+        int colDiff = Math.Abs(to.Column - from.Column);
         
         if (!((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2)))
             return false;
             
-        var targetPiece = board.Squares[newPosition.Row, newPosition.Column];
+        var targetPiece = board.Squares[to.Row, to.Column];
         return targetPiece == null || targetPiece.Color != Color;
     }
 }

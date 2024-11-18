@@ -6,7 +6,10 @@ public abstract class Piece
     public PieceType Type { get; protected set; }
     public string ImagePath { get; protected set; }
     public abstract char Symbol { get; }
-    public abstract bool IsValidMove(Position newPosition, Board board);
+    public virtual bool IsValidMove(Position from, Position to, Board board)
+    {
+        throw new NotImplementedException();
+    }
 
     public Piece(PieceColor color, PieceType type, Position position)
     {

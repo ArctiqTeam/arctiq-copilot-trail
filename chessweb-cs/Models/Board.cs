@@ -47,15 +47,13 @@ public class Board
         }
     }
 
-    public bool MovePiece(Position from, Position to)
+    public void MovePiece(Position from, Position to)
     {
         var piece = Squares[from.Row, from.Column];
-        if (piece == null || !piece.IsValidMove(to, this))
-            return false;
-            
-        Squares[to.Row, to.Column] = piece;
-        Squares[from.Row, from.Column] = null;
-        piece.UpdatePosition(to);
-        return true;
+        if (piece != null) {
+            Squares[to.Row, to.Column] = piece;
+            Squares[from.Row, from.Column] = null;
+            piece.UpdatePosition(to);
+        }
     }
 }

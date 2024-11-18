@@ -61,12 +61,11 @@ document.querySelectorAll('.cell').forEach(cell => {
                 if (data.success) {
                     window.location.reload();
                 } else {
-                    alert(data.message);
+                    console.log(data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Failed to make move: ' + error.message);
             });
 
             selectedCell.classList.remove('selected');

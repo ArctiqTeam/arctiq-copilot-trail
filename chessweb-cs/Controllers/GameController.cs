@@ -20,11 +20,16 @@ public class GameController : Controller
         var from = new Position(fromRow, fromCol);
         var to = new Position(toRow, toCol);
         
-        bool moveSuccessful = _gameState.MovePiece(from, to);
+        string moveMessage;
+        bool moveSuccessful = _gameState.MovePiece(from, to, out moveMessage);
         
         if (!moveSuccessful)
         {
-            return Json(new { success = false, message = "Invalid move" });
+            return Json(new { 
+                success = false, 
+                message = moveMessage,
+                currentTurn = _gameState.CurrentTurn.ToString().ToLower()
+            });
         }
         
         return Json(new { success = true });
