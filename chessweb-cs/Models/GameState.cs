@@ -4,6 +4,8 @@ public class GameState
     public Board Board { get; set; } = new();
     public PieceColor CurrentTurn { get; private set; } = PieceColor.White;
     public bool IsGameOver { get; set; }
+    public Position? LastMoveFrom { get; private set; }
+    public Position? LastMoveTo { get; private set; }
     
     public GameState(string fen)
     {
@@ -53,9 +55,18 @@ public class GameState
         return false;
     }
 
-        public void Reset()
+    public void UpdateLastMove(Position from, Position to)
     {
-        // Reinitialize the board with starting position
+        LastMoveFrom = from;
+        LastMoveTo = to;
+    }
+
+    public void Reset()
+    {
         Board.SetPositionFromFen("start");
+        CurrentTurn = PieceColor.White; // Reset to white's turn
+        LastMoveFrom = null; // Clear last move
+        LastMoveTo = null;
+        IsGameOver = false;
     }
 }

@@ -11,7 +11,12 @@
             {
                 var piece = Model.Board.Squares[row,col];
                 var cellClass = (row + col) % 2 == 0 ? "white" : "black";
-                <div class="cell @cellClass" 
+                string highlightClass = "";
+                if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                    highlightClass = "last-move-from";
+                else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                    highlightClass = "last-move-to";
+                <div class="square @cellClass @highlightClass" 
                      data-row="@row" 
                      data-col="@col">
                     @if (piece != null)
@@ -30,8 +35,8 @@
 <script>
 let selectedCell = null;
 
-document.querySelectorAll('.cell').forEach(cell => {
-    cell.addEventListener('click', function() {
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('click', function() {
         if (selectedCell === null) {
             selectedCell = this;
             this.classList.add('selected');
@@ -40,8 +45,8 @@ document.querySelectorAll('.cell').forEach(cell => {
             const fromCol = selectedCell.dataset.col;
             const toRow = this.dataset.row;
             const toCol = this.dataset.col;
-            
-            console.log(`Moving from (${fromRow},${fromCol}) to (${toRow},${toCol})`);
+            const selectedPiece = selectedCell.querySelector('.piece');
+
             fetch('/Game/Move', {
                 method: 'POST',
                 headers: {
@@ -49,25 +54,36 @@ document.querySelectorAll('.cell').forEach(cell => {
                 },
                 body: `fromRow=${fromRow}&fromCol=${fromCol}&toRow=${toRow}&toCol=${toCol}`
             })
-            .then(response => {
-                console.log('Response status:', response.status);
-                if (!response.ok) {
-                    throw new Error('Move failed');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                console.log('Move result:', data);
                 if (data.success) {
-                    window.location.reload();
-                } else {
-                    console.log(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                    //alert(selectedCell.innerHTML);
+                    // Clear previous highlights
+                    document.querySelectorAll('.last-move-from, .last-move-to')
+                        .forEach(el => el.classList.remove('last-move-from', 'last-move-to'));
+                    
+                    // Add new highlights
+                    document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`)
+                        .classList.add('last-move-from');
+                    document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`)
+                        .classList.add('last-move-to');
 
+                    // Move piece image to new square
+                    if (selectedPiece) {
+                        const targetSquare = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
+                        // Remove any existing piece at target
+                        const existingPiece = targetSquare.querySelector('.piece');
+                        if (existingPiece) {
+                            existingPiece.remove();
+                        }
+                        // Move piece to new square
+                        targetSquare.appendChild(selectedPiece);
+                    }
+                } else {
+                    console.error(data.message);
+                }
+            });
+            // Remove selected state
             selectedCell.classList.remove('selected');
             selectedCell = null;
         }
