@@ -3,30 +3,39 @@
 }
 
 @model GameState
-<div class="chess-board">
-    @for (int row = 0; row < 8; row++)
-    {
-        <div class="row">
-            @for (int col = 0; col < 8; col++)
+<div class="chess-container">
+    <div class="board-wrapper">
+
+        <div class="chess-board">
+            @for (int row = 0; row < 8; row++)
             {
-                var piece = Model.Board.Squares[row,col];
-                var cellClass = (row + col) % 2 == 0 ? "white" : "black";
-                string highlightClass = "";
-                if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
-                    highlightClass = "last-move-from";
-                else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
-                    highlightClass = "last-move-to";
-                <div class="square @cellClass @highlightClass" 
-                     data-row="@row" 
-                     data-col="@col">
-                    @if (piece != null)
+                <div class="row">
+                    @for (int col = 0; col < 8; col++)
                     {
-                        <img class="piece" src="@piece.ImagePath" alt="@piece.Type" />
+                        var piece = Model.Board.Squares[row,col];
+                        var cellClass = (row + col) % 2 == 0 ? "white" : "black";
+                        string highlightClass = "";
+                        if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                            highlightClass = "last-move-from";
+                        else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                            highlightClass = "last-move-to";
+                        <div class="square @cellClass @highlightClass" 
+                            data-row="@row" 
+                            data-col="@col">
+                            @if (piece != null)
+                            {
+                                <img class="piece" src="@piece.ImagePath" alt="@piece.Type" />
+                            }
+                        </div>
                     }
                 </div>
             }
         </div>
-    }
+    </div>
+    <div class="indicators-panel">
+        <div class="turn-indicator white-turn active-turn" id="whiteTurnIndicator"></div>
+        <div class="turn-indicator black-turn" id="blackTurnIndicator"></div>
+    </div>
 </div>
 <div class="controls">
     <button id="resetButton" class="btn btn-primary">Reset Game</button>
@@ -57,7 +66,20 @@ document.querySelectorAll('.square').forEach(square => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    //alert(selectedCell.innerHTML);
+                    // Update turn indicators
+                    const whiteTurnIndicator = document.getElementById('whiteTurnIndicator');
+                    const blackTurnIndicator = document.getElementById('blackTurnIndicator');
+                    // Remove active-turn from both
+                    whiteTurnIndicator.classList.remove('active-turn');
+                    blackTurnIndicator.classList.remove('active-turn');
+                    
+                    // Add to correct indicator
+                    if (data.currentTurn === 'white') {
+                        whiteTurnIndicator.classList.add('active-turn');
+                    } else {
+                        blackTurnIndicator.classList.add('active-turn');
+                    }
+
                     // Clear previous highlights
                     document.querySelectorAll('.last-move-from, .last-move-to')
                         .forEach(el => el.classList.remove('last-move-from', 'last-move-to'));

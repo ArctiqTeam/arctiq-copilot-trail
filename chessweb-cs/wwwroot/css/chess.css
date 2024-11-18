@@ -7,7 +7,7 @@
     margin: 0 auto;
     padding: 0;
     /* Remove positioning if not needed */
-    position: static;
+    position: relative;
 }
 
 .row {
@@ -45,4 +45,45 @@
 
 .selected {
     background-color: #e2e6ea !important;
+}
+
+.white-turn {
+    bottom: 0;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.black-turn {
+    top: 0;
+    background-color: black;
+}
+
+.active-turn {
+    display: block !important;
+}
+
+.chess-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.board-wrapper {
+    flex: 0 0 auto;
+}
+
+.indicators-panel {
+    flex: 0 0 50px;
+    height: 403px; /* Match board height */
+    position: relative;
+}
+
+.turn-indicator {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 15px;
+    display: none;
 }

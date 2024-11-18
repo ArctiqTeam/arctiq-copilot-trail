@@ -27,12 +27,14 @@ public class GameController : Controller
         {
             return Json(new { 
                 success = false, 
-                message = moveMessage,
-                currentTurn = _gameState.CurrentTurn.ToString().ToLower()
+                message = moveMessage
             });
         }
         
-        return Json(new { success = true });
+        return Json(new { 
+            success = true,
+            currentTurn = _gameState.CurrentTurn.ToString().ToLower()
+        });
     }
     
     [HttpPost]
