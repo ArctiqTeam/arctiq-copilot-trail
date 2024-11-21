@@ -197,7 +197,38 @@ namespace PawnModel.UnitTests.Models
             Assert.False(result);
         }
 
+        [Fact]
+        public void IsValidMove_WhenBlackPawnTriesToJumpOverWhitePawnTwoSquaresAhead_ThenReturnsFalse()
+        {
+            // Arrange
+            var blackPawn = new Pawn(PieceColor.Black, new Position(1, 1));
+            var whitePawn = new Pawn(PieceColor.White, new Position(2, 1));
+            var board = new Board();
+            board.Squares[1, 1] = blackPawn;
+            board.Squares[2, 1] = whitePawn;
 
+            // Act - Black pawn tries to move two squares forward but is blocked by a white pawn
+            var result = blackPawn.IsValidMove(blackPawn.Position, new Position(3, 1), board);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsValidMove_WhenWhitePawnTriesToJumpOverBlackPawnTwoSquaresAhead_ThenReturnsFalse()
+        {
+            // Arrange
+            var whitePawn = new Pawn(PieceColor.White, new Position(6, 1));
+            var blackPawn = new Pawn(PieceColor.Black, new Position(5, 1));
+            var board = new Board();
+            board.Squares[6, 1] = whitePawn;
+            board.Squares[5, 1] = blackPawn;
+
+            // Act - White pawn tries to move two squares forward but is blocked by a black pawn
+            var result = whitePawn.IsValidMove(whitePawn.Position, new Position(4, 1), board);
+
+            // Assert
+            Assert.False(result);
+        }
     }
-    
 }
