@@ -15,6 +15,7 @@ public class Knight : Piece
         if (!((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2)))
             return false;
             
+        // NOTE: Referencing a square that is out of bounds will cause an exception
         var targetPiece = board.Squares[to.Row, to.Column];
         return targetPiece == null || targetPiece.Color != Color;
     }

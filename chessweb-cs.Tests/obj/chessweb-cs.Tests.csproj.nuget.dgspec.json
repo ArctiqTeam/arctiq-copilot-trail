@@ -1,0 +1,151 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ax/git/arctiq-copilot-trail/chessweb-cs.Tests/chessweb-cs.Tests.csproj": {}
+  },
+  "projects": {
+    "/home/ax/git/arctiq-copilot-trail/chessweb-cs.Tests/chessweb-cs.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ax/git/arctiq-copilot-trail/chessweb-cs.Tests/chessweb-cs.Tests.csproj",
+        "projectName": "chessweb-cs.Tests",
+        "projectPath": "/home/ax/git/arctiq-copilot-trail/chessweb-cs.Tests/chessweb-cs.Tests.csproj",
+        "packagesPath": "/home/ax/.nuget/packages/",
+        "outputPath": "/home/ax/git/arctiq-copilot-trail/chessweb-cs.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ax/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/home/ax/git/arctiq-copilot-trail/chessweb-cs/chessweb-cs.csproj": {
+                "projectPath": "/home/ax/git/arctiq-copilot-trail/chessweb-cs/chessweb-cs.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.11.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/ax/dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/ax/git/arctiq-copilot-trail/chessweb-cs/chessweb-cs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ax/git/arctiq-copilot-trail/chessweb-cs/chessweb-cs.csproj",
+        "projectName": "chessweb-cs",
+        "projectPath": "/home/ax/git/arctiq-copilot-trail/chessweb-cs/chessweb-cs.csproj",
+        "packagesPath": "/home/ax/.nuget/packages/",
+        "outputPath": "/home/ax/git/arctiq-copilot-trail/chessweb-cs/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ax/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/ax/dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
