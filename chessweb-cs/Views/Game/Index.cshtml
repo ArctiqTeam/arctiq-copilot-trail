@@ -1,0 +1,138 @@
+@{
+    ViewData["Title"] = "Arctiq Chess Game Viewer";
+}
+
+@model GameState
+<div class="chess-container">
+    <div class="board-wrapper">
+
+        <div class="chess-board">
+            @for (int row = 0; row < 8; row++)
+            {
+                <div class="row">
+                    @for (int col = 0; col < 8; col++)
+                    {
+                        var piece = Model.Board.Squares[row,col];
+                        var cellClass = (row + col) % 2 == 0 ? "white" : "black";
+                        string highlightClass = "";
+                        if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                            highlightClass = "last-move-from";
+                        else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                            highlightClass = "last-move-to";
+                        <div class="square @cellClass @highlightClass" 
+                            data-row="@row" 
+                            data-col="@col">
+                            @if (piece != null)
+                            {
+                                <img class="piece" src="@piece.ImagePath" alt="@piece.Type" />
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="indicators-panel">
+        <div class="turn-indicator white-turn active-turn" id="whiteTurnIndicator"></div>
+        <div class="turn-indicator black-turn" id="blackTurnIndicator"></div>
+    </div>
+</div>
+<div class="controls">
+    <button id="resetButton" class="btn btn-primary">Reset Game</button>
+</div>
+
+<script>
+let selectedCell = null;
+
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('click', function() {
+        if (selectedCell === null) {
+            selectedCell = this;
+            this.classList.add('selected');
+        } else {
+            const fromRow = selectedCell.dataset.row;
+            const fromCol = selectedCell.dataset.col;
+            const toRow = this.dataset.row;
+            const toCol = this.dataset.col;
+            const selectedPiece = selectedCell.querySelector('.piece');
+
+            fetch('/Game/Move', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `fromRow=${fromRow}&fromCol=${fromCol}&toRow=${toRow}&toCol=${toCol}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update turn indicators
+                    const whiteTurnIndicator = document.getElementById('whiteTurnIndicator');
+                    const blackTurnIndicator = document.getElementById('blackTurnIndicator');
+                    // Remove active-turn from both
+                    whiteTurnIndicator.classList.remove('active-turn');
+                    blackTurnIndicator.classList.remove('active-turn');
+                    
+                    // Add to correct indicator
+                    if (data.currentTurn === 'white') {
+                        whiteTurnIndicator.classList.add('active-turn');
+                    } else {
+                        blackTurnIndicator.classList.add('active-turn');
+                    }
+
+                    // Clear previous highlights
+                    document.querySelectorAll('.last-move-from, .last-move-to')
+                        .forEach(el => el.classList.remove('last-move-from', 'last-move-to'));
+                    
+                    // Add new highlights
+                    document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`)
+                        .classList.add('last-move-from');
+                    document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`)
+                        .classList.add('last-move-to');
+
+                    // Move piece image to new square
+                    if (selectedPiece) {
+                        const targetSquare = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
+                        // Remove any existing piece at target
+                        const existingPiece = targetSquare.querySelector('.piece');
+                        if (existingPiece) {
+                            existingPiece.remove();
+                        }
+                        // Move piece to new square
+                        targetSquare.appendChild(selectedPiece);
+                    }
+                } else {
+                    console.error(data.message);
+                }
+            });
+            // Remove selected state
+            selectedCell.classList.remove('selected');
+            selectedCell = null;
+        }
+    });
+});
+
+document.getElementById('resetButton').addEventListener('click', function() {
+    fetch('/Game/Reset', {
+        method: 'POST'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Reset failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to reset game: ' + error.message);
+    });
+});
+
+</script>

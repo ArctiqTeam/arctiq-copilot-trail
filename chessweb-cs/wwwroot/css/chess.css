@@ -1,0 +1,89 @@
+.chess-board {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 403px;  /* 8 cells × 50px per cell */
+    height: 403px; /* 8 cells × 50px per cell */
+    margin: 0 auto;
+    padding: 0;
+    /* Remove positioning if not needed */
+    position: relative;
+}
+
+.row {
+    display: flex;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.square.white { background-color: #f3f2ed; }
+.square.black { background-color: #64c182; }
+.square.selected { background-color: #a2bdf1; }
+.piece {
+    width: 40px;   /* Fixed width */
+    height: 40px;  /* Fixed height */
+    object-fit: contain;
+}
+
+.last-move-from {
+    background-color: #fff3cd !important;
+}
+
+.last-move-to {
+    background-color: #ffe8a1 !important;
+}
+
+.selected {
+    background-color: #e2e6ea !important;
+}
+
+.white-turn {
+    bottom: 0;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.black-turn {
+    top: 0;
+    background-color: black;
+}
+
+.active-turn {
+    display: block !important;
+}
+
+.chess-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.board-wrapper {
+    flex: 0 0 auto;
+}
+
+.indicators-panel {
+    flex: 0 0 50px;
+    height: 403px; /* Match board height */
+    position: relative;
+}
+
+.turn-indicator {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 15px;
+    display: none;
+}
