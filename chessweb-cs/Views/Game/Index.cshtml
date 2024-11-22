@@ -4,8 +4,13 @@
 
 @model GameState
 <div class="chess-container">
+    <div class="row-numbers">
+        @for (int row = 8; row > 0; row--)
+        {
+            <div class="row-number">@row</div>
+        }
+    </div>
     <div class="board-wrapper">
-
         <div class="chess-board">
             @for (int row = 0; row < 8; row++)
             {
@@ -31,14 +36,20 @@
                 </div>
             }
         </div>
+        <div class="column-letters">
+            @for (char col = 'a'; col <= 'h'; col++)
+            {
+                <div class="column-letter">@col</div>
+            }
+        </div>
+        <div class="controls">
+            <button id="resetButton" class="btn btn-primary">Reset Game</button>
+        </div>
     </div>
     <div class="indicators-panel">
         <div class="turn-indicator white-turn active-turn" id="whiteTurnIndicator"></div>
         <div class="turn-indicator black-turn" id="blackTurnIndicator"></div>
     </div>
-</div>
-<div class="controls">
-    <button id="resetButton" class="btn btn-primary">Reset Game</button>
 </div>
 
 <script>
