@@ -121,6 +121,8 @@ document.querySelectorAll('.square').forEach(square => {
                         // Move piece to new square
                         targetSquare.appendChild(selectedPiece);
                     }
+                    // Update the FEN input
+                    document.getElementById('fen').value = data.fen;
                 } else {
                     console.error(data.message);
                 }
