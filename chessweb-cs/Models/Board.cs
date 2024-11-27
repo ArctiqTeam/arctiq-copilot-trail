@@ -13,9 +13,17 @@ public class Board
             fen = INITIAL_FEN;
         else if (fen == "empty")
             fen = EMPTY_FEN;
-        Squares = new Piece[8,8]; // Reset board
+
+        // Validate FEN string
         string[] fenParts = fen.Split(' ');
+        if (fenParts.Length != 6)
+            throw new ArgumentException("Invalid FEN string: Incorrect number of parts");
+
         string position = fenParts[0];
+        if (position.Split('/').Length != 8)
+            throw new ArgumentException("Invalid FEN string: Incorrect number of rows");
+
+        Squares = new Piece[8,8]; // Reset board
         int row = 0;
         int col = 0;
         
