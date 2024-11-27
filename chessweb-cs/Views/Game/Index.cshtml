@@ -4,51 +4,56 @@
 
 @model GameState
 <div class="chess-container">
-    <div class="row-numbers">
-        @for (int row = 8; row > 0; row--)
-        {
-            <div class="row-number">@row</div>
-        }
+    <div class="play-area">
+        <div class="row-numbers">
+            @for (int row = 8; row > 0; row--)
+            {
+                <div class="row-number">@row</div>
+            }
+        </div>
+        <div class="board-wrapper">
+            <div class="chess-board">
+                @for (int row = 0; row < 8; row++)
+                {
+                    <div class="row">
+                        @for (int col = 0; col < 8; col++)
+                        {
+                            var piece = Model.Board.Squares[row,col];
+                            var cellClass = (row + col) % 2 == 0 ? "white" : "black";
+                            string highlightClass = "";
+                            if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                                highlightClass = "last-move-from";
+                            else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
+                                highlightClass = "last-move-to";
+                            <div class="square @cellClass @highlightClass" 
+                                data-row="@row" 
+                                data-col="@col">
+                                @if (piece != null)
+                                {
+                                    <img class="piece" src="@piece.ImagePath" alt="@piece.Type" />
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="column-letters">
+                @for (char col = 'a'; col <= 'h'; col++)
+                {
+                    <div class="column-letter">@col</div>
+                }
+            </div>
+        </div>
+        <div class="indicators-panel">
+            <div class="turn-indicator white-turn active-turn" id="whiteTurnIndicator"></div>
+            <div class="turn-indicator black-turn" id="blackTurnIndicator"></div>
+        </div>
     </div>
-    <div class="board-wrapper">
-        <div class="chess-board">
-            @for (int row = 0; row < 8; row++)
-            {
-                <div class="row">
-                    @for (int col = 0; col < 8; col++)
-                    {
-                        var piece = Model.Board.Squares[row,col];
-                        var cellClass = (row + col) % 2 == 0 ? "white" : "black";
-                        string highlightClass = "";
-                        if (Model.LastMoveFrom?.Equals(new ChessWeb.Models.Position(row, col)) == true)
-                            highlightClass = "last-move-from";
-                        else if (Model.LastMoveTo?.Equals(new ChessWeb.Models.Position(row, col)) == true)
-                            highlightClass = "last-move-to";
-                        <div class="square @cellClass @highlightClass" 
-                            data-row="@row" 
-                            data-col="@col">
-                            @if (piece != null)
-                            {
-                                <img class="piece" src="@piece.ImagePath" alt="@piece.Type" />
-                            }
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-        <div class="column-letters">
-            @for (char col = 'a'; col <= 'h'; col++)
-            {
-                <div class="column-letter">@col</div>
-            }
-        </div>
+    <div class="control-area">
+    <div class="game-controls">
         <div class="controls">
             <button id="resetButton" class="btn btn-primary">Reset Game</button>
         </div>
-    </div>
-    <div class="indicators-panel">
-        <div class="turn-indicator white-turn active-turn" id="whiteTurnIndicator"></div>
-        <div class="turn-indicator black-turn" id="blackTurnIndicator"></div>
     </div>
 </div>
 
@@ -112,6 +117,8 @@ document.querySelectorAll('.square').forEach(square => {
                         // Move piece to new square
                         targetSquare.appendChild(selectedPiece);
                     }
+                    // Update the FEN input
+                    document.getElementById('fen').value = data.fen;
                 } else {
                     console.error(data.message);
                 }
