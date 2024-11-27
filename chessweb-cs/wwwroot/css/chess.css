@@ -35,16 +35,15 @@
     object-fit: contain;
 }
 .row-numbers {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-right: 5px;
+    flex: 0 0 20px;
+    height: 403px; /* Match board height */
+    position: relative;
 }
 .row-number {
     height: 50px; /* Adjust based on your square size */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
 }
 .column-letters {
     display: flex;
@@ -86,10 +85,27 @@
 
 .chess-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     gap: 10px;
-    width: 100%;
+    width: 600px;
+}
+
+.play-area {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 500px;
+}
+
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
 }
 
 .board-wrapper {
@@ -108,4 +124,12 @@
     position: absolute;
     left: 15px;
     display: none;
+}
+
+.fen-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    font-size: small;
 }
