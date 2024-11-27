@@ -6,11 +6,13 @@ public class GameState
     public bool IsGameOver { get; set; }
     public Position? LastMoveFrom { get; private set; }
     public Position? LastMoveTo { get; private set; }
+    public string? FEN { get; set; }
     
     public GameState(string fen)
     {
         Board = new Board();
         Board.SetPositionFromFen(fen);
+        this.FEN = Board.GenerateFEN();
         CurrentTurn = PieceColor.White;
         IsGameOver = false;
     }
@@ -21,7 +23,6 @@ public class GameState
             PieceColor.Black : PieceColor.White;
     }
 
-        // In GameState.cs
     public bool MovePiece(Position from, Position to, out string message)
     {
         var piece = Board.Squares[from.Row, from.Column];
@@ -39,7 +40,6 @@ public class GameState
         }
 
         bool isValidMove = piece.IsValidMove(from, to, Board);
-        //bool isValidMove = true;
 
         if (isValidMove)
         {
@@ -49,6 +49,7 @@ public class GameState
             CurrentTurn = CurrentTurn == PieceColor.White ? 
                 PieceColor.Black : PieceColor.White;
             message = "Move successful";
+            this.FEN = Board.GenerateFEN();
             return true;
         }
         message = "Invalid move for this piece";
@@ -64,6 +65,7 @@ public class GameState
     public void Reset()
     {
         Board.SetPositionFromFen("start");
+        this.FEN = Board.GenerateFEN();
         CurrentTurn = PieceColor.White; // Reset to white's turn
         LastMoveFrom = null; // Clear last move
         LastMoveTo = null;
