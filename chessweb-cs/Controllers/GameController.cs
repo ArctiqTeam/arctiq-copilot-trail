@@ -33,6 +33,7 @@ public class GameController : Controller
         
         return Json(new { 
             success = true,
+            fen = _gameState.FEN,
             currentTurn = _gameState.CurrentTurn.ToString().ToLower()
         });
     }
