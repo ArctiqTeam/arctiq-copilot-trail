@@ -143,4 +143,6 @@ Figure 7: A request for a mermaid-based entity-relationship diagram.
 
 ## Step 4 - Adding a Feature to the Codebase
 
-TODO
+### The ChessWeb Codebase
+
+Our example application is called ChessWeb. It is a simple Web Application designed to have just enough complexity in its function to be an interesting target for Copilot work. It can be found in the repository under chessweb-cs (C#), chessweb-node (NodeJS), and chessweb-java (Java).
