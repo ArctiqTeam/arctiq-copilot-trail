@@ -114,8 +114,77 @@ Learn how to use common prompt engineering techniques using GittHub Copilot
 
 ## Step 3 - Generated Knowledge Prompting
 
-TODO
+- Generated Knowledge Prompting (GKP) is a technique that enhances commonsense reasoning by leveraging the latent knowledge embedded within large language models. This method generates task-relevant knowledge statements from a language model and integrates this knowledge into the inference process to improve the output quality.
+
+- GKP essentially consists of two steps:
+
+    1. Knowledge Generation: Prompt the AI to provide some facts related to a task you are interested to perform. These statements will provide useful context or reasoning pathways for the next step.
+    2. Knowledge Integration: Prompt the AI to perform the task you want and included the generated knowledge as context. This enables the model to utilize the additional context to make more accurate predictions.
+
+- Unlike traditional approaches requiring external knowledge bases or task-specific fine-tuning, GKP allows for flexible, on-the-fly augmentation using the same underlying language model.
+
+- Let's see a simple example using Github Copilot to create a factorial function in Python. First, we use a common prompt
+
+    ```
+    create a function that returns the factorial of a number in Python
+    ```
+
+- and we will get an output similar to the following
+
+    ```python
+    def factorial(n):
+        if n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+    ```
+
+- Nothing suprising here, just a simple factorial function. Now let's use GKP to enhance the function quality. First, we ask Github Copilot to generate some facts related to the task
+
+    ```
+    Generate some facts about factorials
+    ```
+
+- Github Copilot will then list some key facts about factorials.
+
+- Next, we ask Github Copilot to do the actual task while referencing the previously generated knowledge as context 
+
+    ```
+    Now use the above knowledge to create a function that returns the factorial of a number in Python
+    ```
+
+- and we will get an output similar to the following
+
+    ```python
+    def factorial(n):
+        if n < 0:
+            raise ValueError("Factorial is not defined for negative numbers")
+        elif n == 0:
+            return 1
+        else:
+            return n * factorial(n - 1)
+
+    ...
+    ```
+
+- Notice the output function now includes a check for negative numbers because of the addition knowledge that n is not defined for negative numbers.
+
+- Now, let's try a more complex example using GKP.
+
+    ```
+    Generate 5 facts about software architecture paradigms that a well-written web app in C# using Blazor should have
+    ```
+- Github Copilot will list some facts about software architecture paradigms especially those that are related to Blazor applications.
+
+- Next, we ask Github Copilot to create a full-blown Blazor application using the generated knowledge as context
+
+    ```
+    Now use the above knowledge to create a Blazor application that list some greatest hits from the 80s with links to the artist pages within the same application
+    ```
+
+- Github Copilot will give a detailed plan on how to create such an application based on the software architecture knowledge from above and all the relevant code snippets to get you started.
 
 ## References
 
-- Prompting Techniques https://www.promptingguide.ai/techniques
+- [Prompting Techniques](https://www.promptingguide.ai/techniques)
+- [Liu et al. 2022. Generated Knowledge Prompting for Commonsense Reasoning](https://arxiv.org/pdf/2110.08387)
