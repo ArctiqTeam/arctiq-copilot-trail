@@ -69,7 +69,7 @@ Learn how to use common prompt engineering techniques using GittHub Copilot
 
 - The output should be similar to the zero-shot prompt, however Copilot is able to figure out the rest of the list based on the examples provided
 
-- Standard few-shot prompting works well for many tasks containing simple repeated patterns but is still not a perfect technique, especially when dealing with more complex tasks, such as complex arithmetic, commonsense, and symbolic reasoning. For these tasks, we need to use more advanced prompting techniques, such as chain-of-thought prompting in the next section.
+- Standard few-shot prompting works well for many tasks containing simple repeated patterns but is still not a perfect technique, especially when dealing with more complex tasks, such as complex arithmetic, common sense reasoning, and symbolic reasoning. For these tasks, we need to use more advanced prompting techniques, such as chain-of-thought prompting in the next section.
 
 ## Step 2 - Chain of Thought Method of Prompting
 
@@ -114,7 +114,7 @@ Learn how to use common prompt engineering techniques using GittHub Copilot
 
 ## Step 3 - Generated Knowledge Prompting
 
-- Generated Knowledge Prompting (GKP) is a technique that enhances commonsense reasoning by leveraging the latent knowledge embedded within large language models. This method generates task-relevant knowledge statements from a language model and integrates this knowledge into the inference process to improve the output quality.
+- Generated Knowledge Prompting (GKP) is a technique that enhances common sense reasoning by leveraging the latent knowledge embedded within large language models. This method generates task-relevant knowledge statements from a language model and integrates this knowledge into the inference process to improve the output quality.
 
 - GKP essentially consists of two steps:
 
