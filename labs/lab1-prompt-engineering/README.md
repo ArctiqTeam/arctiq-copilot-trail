@@ -163,8 +163,6 @@ Learn how to use common prompt engineering techniques using GittHub Copilot
             return 1
         else:
             return n * factorial(n - 1)
-
-    ...
     ```
 
 - Notice the output function now includes a check for negative numbers because of the addition knowledge that n is not defined for negative numbers.
@@ -183,6 +181,10 @@ Learn how to use common prompt engineering techniques using GittHub Copilot
     ```
 
 - Github Copilot will give a detailed plan on how to create such an application based on the software architecture knowledge from above and all the relevant code snippets to get you started.
+
+- This GKP technique is particularly useful when you need higher quality output for complex tasks that require common sense reasoning.
+
+### Congratulations you've completed it! 🎉
 
 ## References
 
