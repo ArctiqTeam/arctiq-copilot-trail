@@ -2,10 +2,10 @@ using ChessWeb.Models; // Adjust this namespace based on where your Board and Pi
 public class GameState
 {
     public Board Board { get; set; } = new();
-    public PieceColor CurrentTurn { get; private set; } = PieceColor.White;
-    public bool IsGameOver { get; set; }
-    public Position? LastMoveFrom { get; private set; }
-    public Position? LastMoveTo { get; private set; }
+    public virtual PieceColor CurrentTurn { get; private set; } = PieceColor.White;
+    public virtual bool IsGameOver { get; set; }
+    public virtual Position? LastMoveFrom { get; private set; }
+    public virtual Position? LastMoveTo { get; private set; }
     
     public GameState(string fen)
     {
@@ -15,14 +15,14 @@ public class GameState
         IsGameOver = false;
     }
 
-    public void SwitchTurn()
+    public virtual void SwitchTurn()
     {
         CurrentTurn = CurrentTurn == PieceColor.White ? 
             PieceColor.Black : PieceColor.White;
     }
 
         // In GameState.cs
-    public bool MovePiece(Position from, Position to, out string message)
+    public virtual bool MovePiece(Position from, Position to, out string message)
     {
         var piece = Board.Squares[from.Row, from.Column];
         if (piece == null)
@@ -55,13 +55,13 @@ public class GameState
         return false;
     }
 
-    public void UpdateLastMove(Position from, Position to)
+    public virtual void UpdateLastMove(Position from, Position to)
     {
         LastMoveFrom = from;
         LastMoveTo = to;
     }
 
-    public void Reset()
+    public virtual void Reset()
     {
         Board.SetPositionFromFen("start");
         CurrentTurn = PieceColor.White; // Reset to white's turn

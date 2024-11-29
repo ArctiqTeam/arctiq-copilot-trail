@@ -230,5 +230,17 @@ namespace PawnModel.UnitTests.Models
             // Assert
             Assert.False(result);
         }
+
+        [Fact]
+        public void IsValidMove_WhenPawnMovesOutOfBoard_ThenThrowsException()
+        {
+            // Arrange
+            var whitePawn = new Pawn(PieceColor.White, new Position(0, 0)); // Position at the edge of the board
+            var board = new Board();
+            board.Squares[0, 0] = whitePawn;
+
+            // Act & Assert - Pawn tries to move out of the board
+            Assert.Throws<IndexOutOfRangeException>(() => whitePawn.IsValidMove(whitePawn.Position, new Position(-1, 0), board));
+        }
     }
 }
