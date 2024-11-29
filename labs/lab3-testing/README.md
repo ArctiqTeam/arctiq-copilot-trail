@@ -18,6 +18,8 @@ Learn how to use Github Copilot to create unit tests and how to use it for test-
 
 # Reminder: This is a WIP
 
+This module uses two different projects. Use the one that's appropriate for eahc part of the workshop.
+
 ## Part 1 - Creating unit tests
 
 ### 1.1
