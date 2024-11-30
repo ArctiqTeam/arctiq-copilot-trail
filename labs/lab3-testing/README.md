@@ -4,7 +4,7 @@
 
 ## Estimated time
 
-- 60 minutes
+- 45-60 minutes
 
 ## Objectives
 
@@ -18,31 +18,37 @@ Learn how to use Github Copilot to create unit tests and how to use it for test-
 
 # Reminder: This is a WIP
 
-This module uses two different projects. Use the one that's appropriate for eahc part of the workshop.
+This module uses two different projects. Use the one that's appropriate for each part of the workshop.
 
 ## Part 1 - Creating unit tests
 
 ### 1.1
 
-* Show some bad prompts
-* Show better ones
-* Show how easy it is to create test cases
-* Show how Copilot can mimick tests you've already written
-* Show that you can prompt Copilot again when edge-cases are missing
-* Show that there are limitations and it might not catch all the edge-cases
+Use the example project named "Part 1" for this first part. Ensure only this part is visible to your editor. We don't want Copilot to accidentally use "Part 2" as context.
+
+This part shows: 
+
+* The results we would get with bad prompts
+* The results we would get with better ones
+* How easy it is to create test cases after you already have a few of them
+* How Copilot can mimick tests you've already written
+* How you can prompt Copilot again when edge-cases are missing
+* What are Copilot's limitations and how it might not catch all edge-cases
 
 ### 1.2
 
-* Show how to do mocking and mock the controller
+This part shows:
+
+* How to do the mocking. We will mock the controller which can be a bit tricky.
 
 ## Part 2 - TDD
 
-Use the second example project.
+In this part, use the second example project. Make sure "Part 1" is not in view of your editor and that you've closed all previous tabs.
 
-* Via TDD, create the code required for the rook to move
-* Give the class 10 minues to create the code for the Knight's movement
-* People who finish early might write tests for the queen's movement and then write the code for it
-* Finish the module by showing Copilot's ability to optimize code in Visual Studio (it's limited to this IDE)
+* Via TDD, create the code required for the rook to move.
+* Give the class 10 to 15 minues to create the code for the Knight's movement.
+* People who finish early may write code for the Queen's movement. Tests are already provided.
+* Finish the module by showing Copilot's ability to optimize code in Visual Studio (it's limited to this IDE -- without Visual Studio, we might use slides)
 
 -------------------------------------------------------------
 
@@ -50,7 +56,11 @@ Use the second example project.
 
 ## Part 1.1
 
-When presenting the workshop, ensure youThings to test for pawns: 
+When presenting the workshop, ensure you generate tests for every cases. Even if you have a 100% code converage, there might still be things that aren't being tested.
+
+In this section, we will be testing the Pawn, Queen and Rook.
+
+Things to test for pawns: 
 
 * Can the pawn move forward one square (is a valid move)
 * Can the pawn move forward two squares from its initial position (is a valid move)
@@ -66,21 +76,28 @@ You must create the same tests again for the chess piece of the other color. Whi
 
 Start with very naive prompts. Copilot will generate only 2 or 4 tests. It will not cover every edge cases. You can ask questions like "What edge cases are missed by our unit tests?". You have to review Copilot's output every single time.
 
+Once you're done with this section, you'll have about 16 tests.
+
 ### Testing the out of bound exception
+
+Getting Copilot to test this is the hardest part. Getting the other tests done was trivial as long as you've explained exactly what was expected to Copilot.
+
+This is from our own testing. Results might differ, Copilot always injects a bit of randomization in its output.
 
 The prompt `/tests  pawn moving out of the board and asserting that an exception has occured` didn't work. It made the pawn move two squares, which is impossibe, so the tests will fail. 
 
-The new prompt `/tests  pawn moving out of the board and asserting that an exception has occured. Ensure the pawn moves only one square away else it's an invalid move and the exception won't be thrown because the move won't be executed. ` will still not work. 
+The new prompt `/tests  pawn moving out of the board and asserting that an exception has occured. Ensure the pawn moves only one square away else it's an invalid move and the exception won't be thrown because the move won't be executed.` will still not work. 
 
-`/tests  pawn moving out of the board and asserting that an exception has occured. Ensure the destination square is only one block away from the source.` was blocked by the Responsible AI Service when using the inline chat. Use the side panel chat instead. 
+The prompt `/tests  pawn moving out of the board and asserting that an exception has occured. Ensure the destination square is only one block away from the source.` was blocked by the Responsible AI Service when using the inline chat. Use the side panel chat instead. 
 
-If you use the same prompt `/tests pawn moving out of the board and asserting that an exception has occured. Ensure the destination square is only one block away from the source.`, it will generate a test with likely the wrong exception. It must be `System.IndexOutOfRangeException`. The @terminal to fix. 
+If you use the above prompt, it will generate a test with likely the wrong exception. It must be `System.IndexOutOfRangeException`. The @terminal to fix. `@terminal /explain` will suggest a change to the caller code so it throws a `ArgumentOutOfRangeException` to match the unit test instead. That's wrong. 
 
-@terminal /explain will suggest a change to the caller code so it throws a `ArgumentOutOfRangeException` to match the unit test instead. That's wrong. Ask Copilot to fix the unit test instead.  
+Ask Copilot to fix the unit test instead: 
 
-`Please fix the unit test. The unit test has to expect the correct exception to be thrown. `
+`Please fix the unit test. The unit test has to expect the correct exception to be thrown.`
 
 The use of `ArgumentOutOfRangeException` isn't a bad suggestion by itself. This is what was suggested:
+
 ```csharp
 public bool IsValidMove(Position from, Position to, Board board)
 {
@@ -92,22 +109,24 @@ public bool IsValidMove(Position from, Position to, Board board)
     // Existing logic for validating the move
 }
 ```
-It makes the reason of the exception cleared. Is Valid Move should not accept out of range arguments.
+
+It makes the reason of the exception clearer. IsValidMove should not accept out of range arguments.
 
 In our case, we've chosen to ignore that to avoid this extra check as we didn't care as much about perfect error handling and we wanted to avoid extra code. This shows an interesting bahavior by Copilot where it won't do exactly what you want but will instead suggest changes to improve your code quality.
 
-
 ### Testing the Queen
 
-When asking to test the Queen, the tests will differ depending whether you have the Pawn tests tab open in your editor. Show both examples to the class. You'll get better tests with the Pawn tests tab open. You have to convey to the class that the more and more tests you write, the more and more you get efficient with Copilot as it has examples it's basing itself on.
+When asking to test the Queen, the tests will differ depending whether you have the Pawn tests tab open in your editor. As the presenter, you will show both examples to the class. You'll get better tests with the Pawn tests tab open. You have to convey to the class that the more and more tests you write, the more and more you get efficient with Copilot as it has examples it's basing itself on.
 
-For the get go, you will be able to have it generate at least 4 test cases, but  you'll see that some might be missing. See if it generates unit tests where it tries to jump over the opponent pieces or it's own color's pieces to capture an opponent piece. 
+From the get go, you will be able to have it generate at least 4 test cases, but you'll see that some might be missing. See if it generates unit tests where it tries to jump over the opponent pieces or it's own color's pieces to capture an opponent piece. 
 
 If you ask copilot `Create a new test case, but we are checking if it moves out of bounds. We have a similar test case for another piece called "IsValidMove_WhenPawnMovesOutOfBoard_ThenThrowsException"`, it will still generate a unit test that uses `ArgumentOutOfRangeException` instead of `IndexOutOfRangeException`. 
 
-Use different models and make sure to include the Pawns' unit tests file. Switch to Claude 3.5 and then to o1-review and use the same prompt. You'll notice that the other models might use `IndexOutOfRangeException`. This helps the class understand that they can laverage the different models to get what they want if some models are inferior. 
+Use different models and make sure to include the Pawns' unit tests file. Switch to **Claude 3.5** and then to **o1-preview** and use the same prompt. You'll notice that the other models might use `IndexOutOfRangeException`. This helps the class understand that they can laverage the different models to get what they want if some models are inferior at a certain task. 
 
-With this specific prompt Claude 3.5 generated: 
+**NOTE:** If you are using Ryder, the current JetBrains GitHub Copilot Plugin doesn't allow to change the model. It hasn't been updated yet.
+
+With this specific prompt, Claude 3.5 generated: 
 
 ```csharp
 [Fact]
@@ -123,7 +142,8 @@ public void IsValidMove_WhenQueenMovesOutOfBoard_ThenThrowsException()
 }
 ```
 
-while o1-preview generated:
+While o1-preview generated the following
+:
 ```csharp
 [Fact]
 public void IsValidMove_WhenBlackPawnMovesOutOfBoard_ThenThrowsException()
@@ -138,7 +158,7 @@ public void IsValidMove_WhenBlackPawnMovesOutOfBoard_ThenThrowsException()
 }
 ```
 
-Claude 3.5 has the best output as it gets the exception right and it tests the right piece. The position it tries to move the piece to is a valid moving pattern, but it out of the chess board.
+Claude 3.5 has the best output as it gets the exception right and it tests the right piece (the Queen, no the pawn). The position it tries to move the piece to is a valid moving pattern, but it's out of the chess board.
 
 You might notice that some test cases are missing. You can ask Copilot if some test cases were generated. For example: `Is there a test for checking if I can capture a chess piece of the same color as my chess piece?`.
 
@@ -153,39 +173,49 @@ It's still only testing the White pieces though, and GTP4o still uses the `Argum
 
 ## Part 1.2 : Mocking
 
-"Write Unit tests for the Game Controller in C#. You must mock the Game Controller class and test the "Move" function. You must add the tests to the UniTest1.cs file. Write multiple test methods that cover a wide range of scenarios, including edge cases, exception handling, and data validation."
+You'll use the following prompt: 
 
-After install Moq and pasting the code in the Test file, there will be errors for each unit test. Use the terminal context for Copilot to fix them.
+`Write Unit tests for the Game Controller in C#. You must mock the Game Controller class and test the "Move" function. You must add the tests to the UniTest1.cs file. Write multiple test methods that cover a wide range of scenarios, including edge cases, exception handling, and data validation.`
 
-@terminal Help me fix those errors. It seems they were caused by the use of non-overridable members in the setup/verification expressions with Moq. 
+After install `Moq` and pasting the code in the Test file, there will be errors for each unit test. Use the terminal context for Copilot to fix them.
 
-We made the function "public virtual bool MovePiece" virtual according to advice from Copilot. This didn't fix the issue. 
+`@terminal` Help us fix those errors. It seems they were caused by the use of non-overridable members in the setup/verification expressions with `Moq`. 
 
-@terminal This didn't fix the issue. According to context from the terminal, describe the problem and fix the issue. 
+We made the function `public virtual bool MovePiece` **virtual** according to advice from Copilot. This didn't fix the issue. 
 
-@terminal I implemented your suggestions. Why is it still failing?
+`@terminal This didn't fix the issue. According to context from the terminal, describe the problem and fix the issue. `
+
+Run `dotnet test` again after implementing its suggestion.
+
+`@terminal I implemented your suggestions. Why is it still failing?`
 
 We're stuck in a loop. Copilot is trying to get us to fix the same thing over and over again. Switch to Claude for better results.
 
-```
+You might see the following error, or part of it:
+
+```bash
 ((f, t, out string m)  shows the following error: 
 
 Inconsistent lambda parameter usage; parameter types must be all explicit or all implicit
 
-"string" is underlined by intellicode
+"string" is underlined by intellisense
 ```
 
-Can you rewrite the unit test and provide a FEN string as the parameter?
+Use the following prompt to fix the above error:
+
+`Can you rewrite the unit test and provide a FEN string as the parameter?`
 
 o1-preview should be better at creating the mocks.
 
-Insert the line `Assert.NotNull(result.Value); ` to shut up warnings.
+There might be a lot of warnings. Insert the line `Assert.NotNull(result.Value);` to the unit tests to shut up warnings. There should be just 3 warnings in the end.
 
 **Calculate the code coverage:**
 
-"How can I know the code coverage of tests?". o1-preview: 
+Ask `How can I know the code coverage of tests?` to o1-preview: 
 
-run `dotnet add package coverlet.collector`. 
+You should get the following instructions:
+
+Run `dotnet add package coverlet.collector`. 
 
 Then run `dotnet test --collect:"XPlat Code Coverage"`.
 
@@ -211,8 +241,7 @@ For a graphical representation of their movement, see:
 * https://kidschessworld.com/knight/
 * https://kidschessworld.com/queen/
 
-
-
+You may share these links with the students. Make sure they understand the task.
 
 
 ------------------------------------------
@@ -234,8 +263,6 @@ This prompt does a few important things:
 Prompt: "What additional tests should be included to ensure full coverage for the integration between the BankAccount class and the NotificationSystem?"
 
 Prompting Copilot with this question can help you identify missing test cases that may have been overlooked. In this situation, while we tested valid and invalid deposits, we haven't yet covered the withdrawal functionality.
-
-
 
 
 ### Copilot tip 2
