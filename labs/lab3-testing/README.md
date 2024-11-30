@@ -60,6 +60,8 @@ When presenting the workshop, ensure you generate tests for every cases. Even if
 
 In this section, we will be testing the Pawn, Queen and Rook.
 
+You could ask the class if they have experience with XUnit. If they don't, delete the test project from the repo and remove references from the **csproj** file. You can ask Copilot for instructions about creating a new one.
+
 Things to test for pawns: 
 
 * Can the pawn move forward one square (is a valid move)
