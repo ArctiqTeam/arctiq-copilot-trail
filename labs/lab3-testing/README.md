@@ -43,6 +43,8 @@ This part shows:
 
 ## Part 2 - TDD
 
+### 2.1
+
 In this part, use the second example project. Make sure "Part 1" is not in view of your editor and that you've closed all previous tabs.
 
 * Via TDD, create the code required for the rook to move.
