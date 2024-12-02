@@ -2,23 +2,48 @@
 
 ## Prerequisites
 
+To participate in this lab you will need to have one of the following IDEs setup and ready for use:
+
+- [Microsoft VSCode](https://code.visualstudio.com/)
+- [JetBrains Rider](https://www.jetbrains.com/rider/)
+- [Microsoft Visual Studio](https://visualstudio.microsoft.com/)
+
+Additionally, your chosen IDE should have the necessary Copilot extension installed and authenticated to work with your GitHub account.
+
+- [GitHub: How to set up Copilot in various IDEs](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/configuring-github-copilot-in-your-environment)
+
+### Runtime Environment
+
+The primary example in this repository for this lab is written in C#. As such, you will need to install and be able to run the ASP.NET 9.0 Framework.
+
+- [ASP.NET 9.0 Download](https://dotnet.microsoft.com/en-us/download)
+
+
+### Lab Source Code
+
+There are two different projects that are going to be used for this lab. Each will be given to you in a zip file.
+
 ## Estimated time
 
-- 45-60 minutes
+- 45 minutes
 
 ## Objectives
 
-Learn how to use Github Copilot to create unit tests and how to use it for test-driven development (TDD).
+In this lab, we will learn how to use Github Copilot to create unit tests and how to use it for test-driven development (TDD). In this lab, we will be using the xUnit testing framework for testing which is xUnit.net is currently the most popular framework for this task.
+
+We will explore:
 
 * The different ways to create tests using Copilot
-* Increase the code coverage
+* How to increase the code coverage
 * Using the terminal context to fix errors
 * Mocking a class
 * Using Copilot for TDD
 
-# Reminder: This is a WIP
+## Reminder
 
 This module uses two different projects. Use the one that's appropriate for each part of the workshop.
+
+-------------------------------------------------------------
 
 ## Part 1 - Creating unit tests
 
@@ -58,7 +83,7 @@ In this part, use the second example project. Make sure "Part 1" is not in view 
 
 ## Part 1.1
 
-When presenting the workshop, ensure you generate tests for every cases. Even if you have a 100% code converage, there might still be things that aren't being tested.
+When doing this part of the workshop, ensure you generate tests for every cases. Even if you have a 100% code converage, there might still be things that aren't being tested.
 
 In this section, we will be testing the Pawn, Queen and Rook.
 
@@ -120,7 +145,7 @@ In our case, we've chosen to ignore that to avoid this extra check as we didn't 
 
 ### Testing the Queen
 
-When asking to test the Queen, the tests will differ depending whether you have the Pawn tests tab open in your editor. As the presenter, you will show both examples to the class. You'll get better tests with the Pawn tests tab open. You have to convey to the class that the more and more tests you write, the more and more you get efficient with Copilot as it has examples it's basing itself on.
+When asking to test the Queen, the tests will differ depending whether you have the Pawn tests tab open in your editor. You should try show both scenarios to see the difference. You'll get better tests with the Pawn tests tab open, but ensure you test without the context first so Copilot will not find this context in your chat history. One that that you'll notice is that the more and more tests you write, the more and more you get efficient with Copilot as it has examples it's basing itself on.
 
 From the get go, you will be able to have it generate at least 4 test cases, but you'll see that some might be missing. See if it generates unit tests where it tries to jump over the opponent pieces or it's own color's pieces to capture an opponent piece. 
 
@@ -245,7 +270,7 @@ For a graphical representation of their movement, see:
 * https://kidschessworld.com/knight/
 * https://kidschessworld.com/queen/
 
-You may share these links with the students. Make sure they understand the task.
+If you're unfamiliar with chess, make sure to have a look at those so that you understand the task.
 
 
 ------------------------------------------
