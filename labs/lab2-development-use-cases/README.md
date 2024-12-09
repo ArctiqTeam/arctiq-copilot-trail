@@ -146,3 +146,48 @@ Figure 7: A request for a mermaid-based entity-relationship diagram.
 ### The ChessWeb Codebase
 
 Our example application is called ChessWeb. It is a simple Web Application designed to have just enough complexity in its function to be an interesting target for Copilot work. It can be found in the repository under chessweb-cs (C#), chessweb-node (NodeJS), and chessweb-java (Java).
+
+This sample application is far from a complete Chess-playing interface. In fact, all it does is provide a view of a Chess board that allows turn-based moves to be entered with very basic piece rules applied. It serves as a basis for extension using Copilot. If you don't have knowledge of or interest in Chess, don't worry, no expertise is required to participate in this part.
+
+Let's take a look at what we have:
+
+We can start the application by entering the `chessweb-cs` directory and running it.
+
+```bash
+dotnet run
+Using launch settings from /Users/pvenables/src/arctiq-copilot-trail/chessweb-cs/Properties/launchSettings.json...
+Building...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5111
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /Users/pvenables/src/arctiq-copilot-trail/chessweb-cs
+```
+
+If successful we can now open a browser to the URI `http://localhost:5111` and see something like this:
+
+![Application Startup View](images/cs-app-view-startup.png)
+
+Figure 8: Application Startup View
+
+In this view we can see a familiar Chess board with pieces set up for the beginning of a game. There is a button that can be used to reset the position. The board is labeled on the ranks and files: ranks are labeled 1-8 and files are labeled a-h. Finally, there is a turn indicator to the right of the board that will display which side and which colour is due to play.
+
+### Exercise 1: Extending the game state display
+
+A reasonable feature to add is a display of the current board position in a standard text-based representation known as Forsyth-Edwrads Notation or FEN. This is a text encoding that can be used to rebuild a Chess position and represent the current game state in both a human and machine-readable fashion. You can read more about FEN [here](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation).
+
+I will give Copilot a suitable prompt to begin this change:
+
+![add-FEN-box-prompt](images/cs-app-add-fen-box-prompt.png)
+
+Figure 9: Prompting for a FEN box
+
+```prompt
+Let's extend this interface to display the current board position as 
+Forsyth-Edwards Notation (FEN). This should take the form of a text 
+input box below the chess board with the current FEN string of the board 
+position that gets updated as pieces are moved on the board.
+```
