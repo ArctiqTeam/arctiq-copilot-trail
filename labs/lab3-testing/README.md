@@ -199,7 +199,7 @@ public void IsValidMove_WhenBlackPawnMovesOutOfBoard_ThenThrowsException()
 }
 ```
 
-- Claude 3.5 has the best output as it gets the exception right and it tests the right piece (the Queen, no the Pawn). The position it tries to move the piece to is a valid moving pattern, but it's out of the chess board as we wanted.
+- Claude 3.5 has the best output as it gets the exception right and it tests the right piece (the Queen, not the Pawn). The position it tries to move the piece to is a valid moving pattern, but it's out of the chess board as we wanted.
 
 - You might notice that some test cases are missing. You can ask Copilot if some test cases were generated. For example: `Is there a test for checking if I can capture a chess piece of the same color as my chess piece?`
 
