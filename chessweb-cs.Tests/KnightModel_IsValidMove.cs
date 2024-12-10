@@ -50,6 +50,8 @@ namespace KnightModel.UnitTests.Models
             Assert.True(result);
         }
 
+        // TODO: Test more invalid moves
+
     }
     
 }
