@@ -29,7 +29,7 @@ There are two different projects that are going to be used for this lab. Each wi
 
 ## Objectives
 
-In this lab, we will learn how to use Github Copilot to create unit tests and how to use it for test-driven development (TDD). In this lab, we will be using `xUnit.net` which is currently the most popular unit test framework for C#.
+We will learn how to use Github Copilot to create unit tests and how to use it for test-driven development (TDD). In this lab, we will be using `xUnit.net` which is currently the most popular unit test framework for C#.
 
 We will explore:
 
@@ -93,7 +93,7 @@ In this section, we will be testing the Pawn, Queen and Rook.
 
 - Remember, the more precise your questions and directives, the better the results.
 
-- If you're not familiar with chess, use online sources to get more familiar with the possible chess moves.
+- If you're not familiar with chess, your can read about the possible chess moves [here](https://www.chess.com/learn-how-to-play-chess).
 
 - Once you're done with this section, you'll have about 16 tests. When you run out of ideas, reveal the spoiler below to see more possible tests.
 
@@ -121,7 +121,7 @@ In this section, we will be testing the Pawn, Queen and Rook.
 
 - Due to the way the application is coded, it's impossible to move a chess piece out of bounds. What will happen if a chess piece is moved out of bounds is not explicitly handled in the code, so Copilot likely find this test case in your previous tesitng.
 
-- This is the hardest test case. Getting the other tests done was trivial as long as you've explained exactly what you wanted to Copilot.
+- This is the hardest test case. Getting the other tests done is trivial as long as you've explained with exactitude what you wanted Copilot to do.
 
 - Try getting Copilot to generate this test case by yourself, here are examples of the prompts you might try and results you'll get: 
 
@@ -157,15 +157,15 @@ public bool IsValidMove(Position from, Position to, Board board)
 
 ### Testing the Queen
 
-- When testing the Queen, the tests will differ depending whether or not you have the Pawn tests tab open in your editor. You should both scenarios to see the difference. You'll get better tests with the Pawn tests tab open as Copilot will use them as an example, but ensure you test without the context first so Copilot will not find this context in your chat history. One thing that you'll notice with Copilot is that the more and more tests you write, the more and more you get efficient with Copilot as it has examples it's basing itself on.
+- When testing the Queen, the tests will differ depending whether or not you have the Pawn tests tab open in your editor. You should try both scenarios to see the difference. You'll get better tests with the Pawn tests tab open as Copilot will use them as an example, but ensure you test without the context first so Copilot will not find this context in your chat history. One thing that you'll notice is that the more tests you write, the more Copilot knows how to write new tests so you'll get more efficient. It will also match the style of existing tests.
 
-- From the get go, you will be able to have it generate at least 4 test cases, but you'll see that some might be missing. See if it generates unit tests where it tries to jump over the opponent pieces or it's own color's pieces to capture an opponent piece. 
+- From the get go, you will be able to have it generate at least 4 test cases, but you'll see that some might be missing. See if it generates unit tests where it tries to jump over the opponent pieces or it's own color's pieces to capture an opponent piece.
 
-- If you ask copilot `Create a new test case, but we are checking if it moves out of bounds. We have a similar test case for another piece called "IsValidMove_WhenPawnMovesOutOfBoard_ThenThrowsException"`, it will still generate a unit test that uses `ArgumentOutOfRangeException` instead of `IndexOutOfRangeException`. 
+- If you ask copilot `Create a new test case, but we are checking if it moves out of bounds. We have a similar test case for another piece called "IsValidMove_WhenPawnMovesOutOfBoard_ThenThrowsException"`, it will still generate a unit test that uses `ArgumentOutOfRangeException` instead of `IndexOutOfRangeException`.
 
-- Use different models and make sure to include the Pawns' unit tests file. Switch to **Claude 3.5** and then to **o1-preview** and use the same prompt. You'll notice that the other models might use `IndexOutOfRangeException`. As you can see, you can laverage the different models to get what you want if some models are inferior at a certain tasks. 
+- (VS Code only) Use different models and make sure to include the Pawns' unit tests file. Switch to **Claude 3.5** and then to **o1-preview** and use the same prompt. You'll notice that the other models might use `IndexOutOfRangeException`. As you can see, you can laverage the different models to get what you want as some models have a better performance at accomplishing certain tasks.
 
-**NOTE:** If you are using Ryder, the current JetBrains GitHub Copilot Plugin doesn't allow to change the model. It hasn't been updated yet.
+**NOTE:** If you are using Ryder or Visual Studio, it's currently impossible to change the model. They haven't been updated yet.
 
 With this specific prompt, Claude 3.5 generates: 
 
@@ -199,9 +199,9 @@ public void IsValidMove_WhenBlackPawnMovesOutOfBoard_ThenThrowsException()
 }
 ```
 
-- Claude 3.5 has the best output as it gets the exception right and it tests the right piece (the Queen, no the Pawn). The position it tries to move the piece to is a valid moving pattern, but it's out of the chess board.
+- Claude 3.5 has the best output as it gets the exception right and it tests the right piece (the Queen, no the Pawn). The position it tries to move the piece to is a valid moving pattern, but it's out of the chess board as we wanted.
 
-- You might notice that some test cases are missing. You can ask Copilot if some test cases were generated. For example: `Is there a test for checking if I can capture a chess piece of the same color as my chess piece?`.
+- You might notice that some test cases are missing. You can ask Copilot if some test cases were generated. For example: `Is there a test for checking if I can capture a chess piece of the same color as my chess piece?`
 
 ### Testing the Rook
 
@@ -217,7 +217,7 @@ It may still only be testing the White pieces though, and GTP4o still uses the `
 
   `Write Unit tests for the Game Controller in C#. You must mock the Game Controller class and test the "Move" function. You must add the tests to the UniTest1.cs file. Write multiple test methods that cover a wide range of scenarios, including edge cases, exception handling, and data validation.`
 
-- After install `Moq` and pasting the code in the Test file, there will be errors for each unit test. Use the terminal context for Copilot to fix them.
+- After installing `Moq` and pasting the code in the Test file, there will be errors for each unit test. Use the terminal context for Copilot to fix them.
 
 - `@terminal` will help you fix those errors. It seems they were caused by the use of non-overridable members in the setup/verification expressions with `Moq`. 
 
@@ -229,7 +229,7 @@ It may still only be testing the White pieces though, and GTP4o still uses the `
 
 - It won't work. Use the prompt `@terminal I implemented your suggestions. Why is it still failing?`
 
-- You'll notice that you're stuck in a loop after doing this a few times. Copilot is trying to get you to fix the same thing over and over again. Switch to Claude for better results.
+- You'll notice that you're stuck in a loop after doing this a few times. Copilot is trying to get you to fix the same thing over and over again. Try switching to Claude to see if you get better results.
 
   You might see the following error, or part of it:
 
@@ -245,7 +245,7 @@ It may still only be testing the White pieces though, and GTP4o still uses the `
 
 - o1-preview should be better at creating the mocks.
 
-- There might be a lot of warnings. Insert the line `Assert.NotNull(result.Value);` to the unit tests to shut up warnings. There should be just 3 warnings in the end.
+- There might be a lot of warnings. Insert the line `Assert.NotNull(result.Value);` to the unit tests to remove warnings. There should be just 3 warnings in the end.
 
 **Calculate the code coverage:**
 
@@ -269,7 +269,7 @@ It may still only be testing the White pieces though, and GTP4o still uses the `
 
 - Use the second project folder which has the Knight code's removed. It also lacks the movement code for the Queen. 
 
-- Take 15 minutes of your time to implement the Knight's code using TDD. If you're finished before the 15 mintues went by, they can implement the Queen's code still using the TDD method. 
+- Take 15 minutes of your time to implement the Knight's code using TDD. If you're finished before the 15 mintues went by, you can implement the Queen's code still using the TDD method. 
 
 - The solution will be presented for the Knight's code after 15 minutes. We'll also show the solution for the Queen's code if there's enough time left. The Queen's code is much more complicated, as you have to check for chess pieces that are in the way. Fortunately, there's already code for other chess pieces that looks alike and can be used to give Copilot some more context.
 
@@ -285,7 +285,6 @@ It may still only be testing the White pieces though, and GTP4o still uses the `
 ------------------------------------------
 
 ### Copilot tip 1
-
 
 Prompt: "Write integration tests for the deposit function in the BankAccount class. Use mocks to simulate the NotificationSystem and verify that it is called correctly after a deposit."
 
