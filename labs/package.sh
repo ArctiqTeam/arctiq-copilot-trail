@@ -5,11 +5,12 @@ folders=("lab1-prompt-engineering" "lab2-development-use-cases" "lab3-testing")
 
 # Initialize a new Git repository
 repo_name="copilot-lab-repository"
+default_branch_name="${folders[0]}"
 echo "Creating Git repository: $repo_name"
 mkdir "$repo_name"
 cd "$repo_name" || exit
 
-git init
+git init --initial-branch="$default_branch_name"
 
 # Loop through each folder and create a branch for it
 for folder in "${folders[@]}"; do
@@ -37,5 +38,4 @@ for folder in "${folders[@]}"; do
 done
 
 # Switch to the first branch of the lab
-branch_name="${folders[0]}"
-git checkout $branch_name --quiet
+git checkout $default_branch_name --quiet
