@@ -211,7 +211,7 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
 
 - In this view we can see a familiar Chess board with pieces set up for the beginning of a game. There is a button that can be used to reset the position. The board is labeled on the ranks and files: ranks are labeled 1-8 and files are labeled a-h. Finally, there is a turn indicator to the right of the board that will display which side and which colour is due to play.
 
-### Exercise 1: Extending the game state display
+### Extending the Game State Display
 
 - A reasonable feature to add is a display of the current board position in a standard text-based representation known as Forsyth-Edwrads Notation or FEN. This is a text encoding that can be used to rebuild a Chess position and represent the current game state in both a human and machine-readable fashion. You can read more about FEN [here](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation).
 
@@ -244,100 +244,46 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
 
 - Note that the name of the CSS class for the FEN container may not have been in context (it's defined in webroot/css/chess.css) and not named correctly in the Copilot response. Just ensure it's named like the above and you're good to go.
 
---- Copied from local notes ---
+- If for some reasons the response from Copilot is not as expected, you can prompt Copilot for more information. For example, you can ask Copilot how to update the FEN string so that it always represents the current board position.
 
-I had the `Index.cshtml` file open in a tab while prompting this in VSCode. The results of this prompt for me were:
+    ![cs-app-ex1-prompt2](images/cs-app-ex1-prompt2.png)
 
-1. Update the GameState class to include a FEN attribute
-2. Update the Index.cshtml to include a FEN text box
-3. Update the FEN string (no solution provided)
+    ```prompt
+    How do we update the FEN string so that it always represents the current board position?
+    ```
 
-Copilot stopped short of providing an answer to the third part of this but we can pick up where it left off by issuing another prompt.
-
-![cs-app-ex1-prompt2.png](images/cs-app-ex1-prompt2.png)
-
-```prompt
-How do we update the FEN string so that it always represents the current board position?
-```
-
-The response includes multiple steps for this update as:
-
-1. Implement the Method to Generate FEN String
-2. Update the FEN String in the `GameState`
-3. Ensure the FEN String is Updated in the View
-
-Copilot gives us a new method to add to our `Board.cs` class called `generateFEN` while inserting that code into my class file I am careful to read the method to ensure I understand and agree with the behaviour given. I will examine the body of the method to ensure it properly handles things like:
-
-- the piece colour and symbol mapping are correct
-- it creates a whole FEN string
-- it doesn't add behaviour I didn't ask for
-- it doesn't duplicate functionality my class already has
-
-When satisfied with the suggestion I add it to the `Board.cs` class and then review the additional suggestions.
-
-I update two methods here in the `Board.cs` class. First the `MovePiece()` method that Copilot mistakenly called `MakeMove` in its suggestion. I just fix the suggestion in my head as I go. Also, knowing that there is another point in my program where the FEN should be updated, I go to the `Reset()` method which is responsible for processing the Reset action and use the new method there.
+- The response from Copilot should now include a method to generate the FEN string and update the FEN string in the `GameState` class. It should also include updating the FEN string in the view.
 
 ### Making the UI Update
 
-When we load the app and check the behaviour we also note that the FEN strong does not update. Of course we are updating the state but that state never gets propagated to the page view. We'll have to fix that as well. 
+- When we load the app and check the behaviour we also note that the FEN strong does not update. Of course we are updating the state but that state never gets propagated to the page view. We'll have to fix that as well. 
 
-![cs-app-complete-fen-prompt2.png](images/cs-app-complete-fen-prompt2.png)
+    ![cs-app-complete-fen-prompt2.png](images/cs-app-complete-fen-prompt2.png)
 
-```prompt
-I need the page view to automatically update the fen input with the updated FEN string when a move is made.
-```
+    ```prompt
+    I need the page view to automatically update the fen input with the updated FEN string when a move is made.
+    ```
 
-Note that I explicitly included `index.cshtml`, `GameController.cs`, and `GameState.cs` in scope for the query.
+- Note that `index.cshtml`, `GameController.cs`, and `GameState.cs` are explicitly included in scope for the query.
 
-The response from Copilot involves creating a javascript call in the index.cshtml to fetch the FEN from the response from the move action-- which doesn't exist yet so it also provides an update to the GameController to return the FEN that we previously added to the class.
+- The response from Copilot involves creating a javascript call in the index.cshtml to fetch the FEN from the response from the move action-- which doesn't exist yet so it also provides an update to the GameController to return the FEN that we previously added to the class.
 
-### Fixes
+### Adding Tests for the New Feature
 
-The code, as given, contained some problems. Notably that the calls to set the FEN attribute were not correct and were updated manually. Additionally the Board class needed to add an import or `using` statement for the StringBuilder object type which comes from `System.Text`. 
+- Copilot can also generate tests for the new feature. You can prompt Copilot to generate tests for the new feature by asking it to generate unit tests for the new feature.
 
-To the provided solution I added:
+    ![cs-app-ex1-prompt3](images/cs-app-ex1-prompt3.png)
 
-```csharp
-using System; // from the suggested unit test
-using Xunit;  // from the suggested unit test
-using ChessWeb.Models;
+    ```prompt
+    Can you generate unit tests for the new feature?
+    ```
 
-namespace ChessWeb.Models.UnitTests
-{
-      // The code provided as the unit test suggestion.
-...
-}
-```
+- The response from Copilot should include a few unit tests for the new feature. Create a new file named `BoardTests.cs` in the `Tests` folder and add the tests to the file.
 
-Making these changes, the unit test passes but there's still a problem. Looking at the unit test provided, I can see they are cooked so that they pass. Copilot has created unit tests that pass functionality based on the current behaviour of the code. The problem is that we will want these tests to properly validate FEN strings. So we will have to correct the tests effectively breaking their results temporarily. 
+- To run the tests, you can use the following command:
 
-First, let's look at the test and why it is wrong:
+    ```bash
+    dotnet test
+    ```
 
-```csharp
-[Fact]
-public void SetPositionFromFen_ValidFEN_SetsBoardCorrectly()
-{
-// Arrange
-var board = new Board();
-string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-// Act
-board.SetPositionFromFen(fen);
-// Assert
-Assert.Equal(fen, board.GenerateFEN().Split(' ')[0]);
-}
-```
-
-From the above, the board will be set with the initial Chess position but the input FEN omits the additional state indicators like castling status, en passant capable squares, turn-number, half-moves, etc. which is does by splitting the actual output of `GenerateFEN()` on the space character effectively using only the positional part of the string.
-
-This approach is very understandable because our initial implementation of `SetPositionFromFen()` does not use this information and the application in general doesn't know how to use them. Copilot has chosen simply to disregard any information given by `GenerateFEN()` after the piece locations. Perhaps this is fine for our use for now. If we do not fix this we will have to circle back and fix it later when we implement these attributes of the FEN representation in the Board class.
-
-Another criticism of this suggestion is that some of the tests are redundant. We have four tests generated as:
-
-```csharp
-public void SetPositionFromFen_ValidFEN_SetsBoardCorrectly()
-public void GenerateFEN_InitialPosition_ReturnsCorrectFEN()
-public void SetPositionFromFen_EmptyBoard_SetsBoardCorrectly()
-public void GenerateFEN_EmptyBoard_ReturnsCorrectFEN()
-```
-
-upon investigation, it turns out that the first two methods and the last two methods do the same thing. It isn't necessary to repeat these tests. We should either isolate the testing so that they don't perform the same tests or simplify by removing the effectively redundant tests.
+### Congratulations you've completed it! 🎉
