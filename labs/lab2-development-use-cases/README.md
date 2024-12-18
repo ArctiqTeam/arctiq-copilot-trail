@@ -209,7 +209,7 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
 
     Figure 8: Application Startup View
 
-- In this view we can see a familiar Chess board with pieces set up for the beginning of a game. There is a button that can be used to reset the position. The board is labeled on the ranks and files: ranks are labeled 1-8 and files are labeled a-h. Finally, there is a turn indicator to the right of the board that will display which side and which colour is due to play.
+- In this view we can see a familiar chessboard with pieces set up for the beginning of a game. There is a button that can be used to reset the position. The board is labeled on the ranks and files: ranks are labeled 1-8 and files are labeled a-h. Finally, there is a turn indicator to the right of the board that will display which side and which colour is due to play.
 
 ### Extending the Game State Display
 
