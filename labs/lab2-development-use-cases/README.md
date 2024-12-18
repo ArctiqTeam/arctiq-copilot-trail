@@ -61,7 +61,7 @@ First, a little more theory. Based on the prompts you have crafted and fed into 
 
 ### Copilot Stalls on Autocomplete
 
-- It can happen that Copilot does not start or provide an answer when it seems clear to the user that they are pausing for a suggestion. This happens most often in the inline copilot suggester. The simple fix here is to give it a little push by starting either a comment or a method and it should trigger copilot.
+- It can happen that Copilot does not autocomplete when it seems clear to the user that they are pausing for a suggestion. The simple fix here is to give it a little push by starting either a comment or a method and it should trigger copilot.
 
 ### Copilot Repeats Itself
 
