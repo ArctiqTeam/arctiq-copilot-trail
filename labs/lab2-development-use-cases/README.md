@@ -83,7 +83,7 @@ First, a little more theory. Based on the prompts you have crafted and fed into 
 
 ### Gives a Naive or Inefficient Answer
 
-- Copilot may answer a tricky question with a simple, effective, but inefficient answer. It often finds an answer that meets the objectives but if efficiency isn't a stated goal in the prompt, it may not prioritize that and the developer will need to re-request that the answer be optimized in the way they desire. The lesson is that you cannot assume Copilot will always choose the optimal solution-- it's goal is to meet the prompt and if efficiency isn't specified it might settle on the simplest answer.
+- Copilot may answer a tricky question with a simple, effective, but inefficient answer. It often finds an answer that meets the objectives but if efficiency isn't a stated goal in the prompt, it may not prioritize that and the developer will need to re-request that the answer be optimized in the way they desire. The lesson is that you cannot assume Copilot will always choose the optimal solution-- its goal is to meet the prompt and if efficiency isn't specified it might settle on the simplest answer.
 
 ### Retracts an Answer that Matches Public Code
 
