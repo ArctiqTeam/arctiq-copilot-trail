@@ -51,13 +51,13 @@ While learning about doing these things we will talk about improving the output 
 
 First, a little more theory. Based on the prompts you have crafted and fed into Copilot, or the amount of code you are working with, you may or may not get the results you wanted. There are a number of ways in which Copilot's answers can fall short of expectations. Commonly you may see it:
 
-- stalls on autocomplete
-- repeats itself
-- deviates from existing code in answer
-- omits or hallucinates content
-- provides an obsolete or dated answer
-- gives a naive or inefficient solution
-- retracts an answer that matches public code
+- stall on autocomplete
+- repeat itself
+- deviate from existing code in answer
+- omit or hallucinate content
+- provide an obsolete or dated answer
+- give a naive or inefficient solution
+- retract an answer that matches public code
 
 ### Copilot Stalls on Autocomplete
 
