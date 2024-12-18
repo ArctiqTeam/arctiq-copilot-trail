@@ -224,7 +224,7 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
     ```prompt
     Let's extend this interface to display the current board position as 
     Forsyth-Edwards Notation (FEN). This should take the form of a text 
-    input box below the chess board with the current FEN string of the board 
+    input box below the chessboard with the current FEN string of the board 
     position that gets updated as pieces are moved on the board.
     ```
 
