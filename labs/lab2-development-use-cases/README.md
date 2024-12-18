@@ -75,7 +75,7 @@ First, a little more theory. Based on the prompts you have crafted and fed into 
 
 - Copilot might refactor variable names in its answer. It is not clear why it does this nor why it might omit statements that exist in your method body but, again, this outlines why user review of all suggestions are necessary. An inability to understand the answers given by Copilot are a recipe for a quagmire of code that does not work.
 
-- Copilot might also omit a large body of code that appears in the answer to simplify the answer and draw your attention to the changed code. IN all cases you need to understand what you are accepting into your codebase from Copilot.
+- Copilot might also omit a large body of code that appears in the answer to simplify the answer and draw your attention to the changed code. In all cases you need to understand what you are accepting into your codebase from Copilot.
 
 ### Provides an Obsolete or Dated Answer
 
