@@ -192,7 +192,7 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
 
 - Our example application is called ChessWeb. It is a simple Web Application designed to have just enough complexity in its function to be an interesting target for Copilot work. It can be found in the repository under chessweb-cs (C#), chessweb-node (NodeJS), and chessweb-java (Java).
 
-- This sample application is far from a complete Chess-playing interface. In fact, all it does is to provide a view of a Chess board that allows turn-based moves to be entered with very basic piece rules applied. It serves as a basis for extension using Copilot. If you don't have knowledge of or interest in Chess, don't worry, no expertise is required to participate in this part.
+- This sample application is far from a complete Chess-playing interface. In fact, all it does is to provide a view of a chessboard that allows turn-based moves to be entered with very basic piece rules applied. It serves as a basis for extension using Copilot. If you don't have knowledge of or interest in Chess, don't worry, no expertise is required to participate in this part.
 
 - Let's take a look at what we have:
 
