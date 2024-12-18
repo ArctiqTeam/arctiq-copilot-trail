@@ -121,7 +121,7 @@ Keep these practices in mind when submitting prompts to Copilot. You will see ma
 
 ## Step 3 - Writing Documentation
 
-- In terms of documentation, Copilot can relieve a lot of tedium. Copilot can generate documenation for you and it can adopt your particular style of documentation given enough examples to work from. So write a few comments yourself and Copilot will resume in a consistent way. The special command for this activity is `/doc`.
+- In terms of documentation, Copilot can relieve a lot of tedium. Copilot can generate documentation for you and it can adopt your particular style of documentation given enough examples to work from. So write a few comments yourself and Copilot will resume in a consistent way. The special command for this activity is `/doc`.
 
 - If starting without any existing examples, it can be helpful to refer to a standard style.
 
