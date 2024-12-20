@@ -1,4 +1,5 @@
-using ChessWeb.Models; // Adjust this namespace based on where your Board and PieceColor types are defined
+using ChessWeb.Models;
+
 public class GameState
 {
     public Board Board { get; set; } = new();
@@ -6,6 +7,7 @@ public class GameState
     public bool IsGameOver { get; set; }
     public Position? LastMoveFrom { get; private set; }
     public Position? LastMoveTo { get; private set; }
+    public string? FEN { get; set; }
     
     public GameState(string fen)
     {
@@ -21,7 +23,6 @@ public class GameState
             PieceColor.Black : PieceColor.White;
     }
 
-        // In GameState.cs
     public bool MovePiece(Position from, Position to, out string message)
     {
         var piece = Board.Squares[from.Row, from.Column];
@@ -31,7 +32,6 @@ public class GameState
             return false;
         }
 
-        // Validate piece exists and belongs to current player
         if (piece.Color != CurrentTurn)
         {
             message = "It's not your turn";
@@ -39,7 +39,6 @@ public class GameState
         }
 
         bool isValidMove = piece.IsValidMove(from, to, Board);
-        //bool isValidMove = true;
 
         if (isValidMove)
         {
@@ -64,8 +63,8 @@ public class GameState
     public void Reset()
     {
         Board.SetPositionFromFen("start");
-        CurrentTurn = PieceColor.White; // Reset to white's turn
-        LastMoveFrom = null; // Clear last move
+        CurrentTurn = PieceColor.White;
+        LastMoveFrom = null;
         LastMoveTo = null;
         IsGameOver = false;
     }
